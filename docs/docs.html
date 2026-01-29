@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000000">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="API documentation, RESTful APIs, developer tools, dark theme API dashboard">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <title></title>
+    <link rel="icon" href="" type="image/png">
+    <link rel="canonical" href="/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['Ubuntu Mono', 'monospace'],
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        'premium-blue': '#3B82F6',
+                        'premium-purple': '#8B5CF6',
+                        'neutral-dark': '#333333',
+                        'neutral-light': '#D1D5DB'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (max-width: 767px) {
+            ::-webkit-scrollbar {
+                display: none !important;
+            }
+        }
+        /* Loader styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .notification-item {
+            transition: opacity 0.3s ease;
+        }
+        .notification-item.read {
+            opacity: 0.6;
+        }
+        body {
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            z-index: -1;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+        .bg-gradient-premium {
+            background: linear-gradient(to right, #3B82F6, #8B5CF6);
+        }
+        .hover\:shadow-premium:hover {
+            box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+        }
+        .text-premium {
+            color: #D1D5DB;
+        }
+        main {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        main.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            background-color: #8B5CF6;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        pre code.hljs {
+            background: transparent !important;
+            padding: 0 !important;
+        }
+        
+        /* New Loader Styles */
+        .container_SevMini {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .Ghost {
+            transform: translate(0px, -25px);
+            z-index: -1;
+            animation: opacidad 4s infinite ease-in-out;
+        }
+
+        @keyframes opacidad {
+            0% {
+                opacity: 1;
+                scale: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+                scale: 0.9;
+            }
+
+            100% {
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        @keyframes estroboscopico {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            51% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rebote {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes estroboscopico1 {
+            0%,
+            50%,
+            100% {
+                fill: rgb(255, 95, 74);
+            }
+
+            25%,
+            75% {
+                fill: rgb(16, 53, 115);
+            }
+        }
+
+        @keyframes estroboscopico2 {
+            0%,
+            50%,
+            100% {
+                fill: #17e300;
+            }
+
+            25%,
+            75% {
+                fill: #17e300b4;
+            }
+        }
+
+        .SevMini {
+            animation: rebote 4s infinite ease-in-out;
+        }
+
+        #strobe_led1 {
+            animation: estroboscopico 0.5s infinite;
+        }
+
+        #strobe_color1 {
+            animation: estroboscopico2 0.8s infinite;
+        }
+
+        #strobe_color3 {
+            animation: estroboscopico1 0.8s infinite;
+            animation-delay: 3s;
+        }
+    </style>
+</head>
+<body class="bg-[#000000] text-premium antialiased font-sans min-h-screen">
+    <!-- Loader -->
+    <div id="loader">
+        <!-- From Uiverse.io by Juanes200122 --> 
+        <div class="container_SevMini">
+            <div class="SevMini">
+                <svg
+                    width="74"
+                    height="90"
+                    viewBox="0 0 74 90"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M40 76.5L72 57V69.8615C72 70.5673 71.628 71.2209 71.0211 71.5812L40 90V76.5Z"
+                        fill="#396CAA"
+                    ></path>
+                    <path
+                        d="M34 75.7077L2 57V69.8615C2 70.5673 2.37203 71.2209 2.97892 71.5812L34 90V75.7077Z"
+                        fill="#396DAC"
+                    ></path>
+                    <path d="M34 76.5H40V90H34V76.5Z" fill="#396CAA"></path>
+                    <path
+                        d="M3.27905 55.593L35.2806 37.5438C36.3478 36.9419 37.6522 36.9419 38.7194 37.5438L70.721 55.593C71.7294 56.1618 71.7406 57.6102 70.7411 58.1945L39.2712 76.593C37.8682 77.4133 36.1318 77.4133 34.7288 76.593L3.25887 58.1945C2.25937 57.6102 2.27061 56.1618 3.27905 55.593Z"
+                        fill="#163C79"
+                        stroke="#396CAA"
+                    ></path>
+                    <path
+                        d="M40 79L72 60V70.4001C72 71.1151 71.6183 71.7758 70.9987 72.1329L40 90V79Z"
+                        fill="#173D7A"
+                    ></path>
+                    <path d="M34 79L3 61V71.5751L34 90V79Z" fill="#0665B2"></path>
+                    <path
+                        id="strobe_color1"
+                        d="M58 72.5L60.5 71V74L58 75.5V72.5Z"
+                        fill="#FF715E"
+                    ></path>
+                    <path
+                        id="strobe_color2"
+                        d="M63 69.5L65.5 68V71L63 72.5V69.5Z"
+                        fill="#17e300b4"
+                    ></path>
+                    <path d="M68 66.5L70.5 65V68L68 69.5V66.5Z" fill="#FF715E"></path>
+                    <path
+                        d="M40 58.5L72 39V51.8615C72 52.5673 71.628 53.2209 71.0211 53.5812L40 72V58.5Z"
+                        fill="#396CAA"
+                    ></path>
+                    <path
+                        d="M34 57.7077L2 39V51.8615C2 52.5673 2.37203 53.2209 2.97892 53.5812L34 72V57.7077Z"
+                        fill="#396DAC"
+                    ></path>
+                    <path d="M34 58.5H40V72H34V58.5Z" fill="#396CAA"></path>
+                    <path
+                        d="M3.27905 37.593L35.2806 19.5438C36.3478 18.9419 37.6522 18.9419 38.7194 19.5438L70.721 37.593C71.7294 38.1618 71.7406 39.6102 70.7411 40.1945L39.2712 58.593C37.8682 59.4133 36.1318 59.4133 34.7288 58.593L3.25887 40.1945C2.25937 39.6102 2.27061 38.1618 3.27905 37.593Z"
+                        fill="#163C79"
+                        stroke="#396CAA"
+                    ></path>
+                    <path
+                        d="M40 61L72 42V52.4001C72 53.1151 71.6183 53.7758 70.9987 54.1329L40 72V61Z"
+                        fill="#173D7A"
+                    ></path>
+                    <path d="M34 61L3 43V53.5751L34 72V61Z" fill="#0665B2"></path>
+                    <path d="M58 54.5L60.5 53V56L58 57.5V54.5Z" fill="#FF715E"></path>
+                    <path d="M63 51.5L65.5 50V53L63 54.5V51.5Z" fill="black"></path>
+                    <path
+                        id="strobe_color1"
+                        d="M63 51.5L65.5 50V53L63 54.5V51.5Z"
+                        fill="#FF715E"
+                    ></path>
+                    <path d="M68 48.5L70.5 47V50L68 51.5V48.5Z" fill="#FF715E"></path>
+                    <path
+                        d="M40 40.5L72 21V33.8615C72 34.5673 71.628 35.2209 71.0211 35.5812L40 54V40.5Z"
+                        fill="#396CAA"
+                    ></path>
+                    <path
+                        d="M34 39.7077L2 21V33.8615C2 34.5673 2.37203 35.2209 2.97892 35.5812L34 54V39.7077Z"
+                        fill="#396DAC"
+                    ></path>
+                    <path d="M34 40.5H40V54H34V40.5Z" fill="#396CAA"></path>
+                    <path
+                        d="M3.27905 19.593L35.2806 1.54381C36.3478 0.941872 37.6522 0.941872 38.7194 1.54381L70.721 19.593C71.7294 20.1618 71.7406 21.6102 70.7411 22.1945L39.2712 40.593C37.8682 41.4133 36.1318 41.4133 34.7288 40.593L3.25887 22.1945C2.25937 21.6102 2.27061 20.1618 3.27905 19.593Z"
+                        fill="#124E89"
+                        stroke="#396CAA"
+                    ></path>
+                    <path
+                        d="M40 43L72 24V34.4001C72 35.1151 71.6183 35.7758 70.9987 36.1329L40 54V43Z"
+                        fill="#173D7A"
+                    ></path>
+                    <path d="M34 43L3 25V35.5751L34 54V43Z" fill="#0665B2"></path>
+                    <path d="M68 30.5L70.5 29V32L68 33.5V30.5Z" fill="#FF715E"></path>
+                    <path
+                        id="strobe_color3"
+                        d="M58 36.5L60.5 35V38L58 39.5V36.5Z"
+                        fill="#FF715E"
+                    ></path>
+                    <path d="M63 33.5L65.5 32V35L63 36.5V33.5Z" fill="#FF715E"></path>
+                    <path
+                        d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
+                        fill="#396CAA"
+                    ></path>
+                    <path
+                        d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
+                        fill="#396CAA"
+                    ></path>
+                    <mask
+                        id="mask0_2_176"
+                        style="mask-type:alpha"
+                        maskUnits="userSpaceOnUse"
+                        x="11"
+                        y="51"
+                        width="14"
+                        height="11"
+                    >
+                        <path
+                            d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
+                            fill="#396CAA"
+                        ></path>
+                    </mask>
+                    <g mask="url(#mask0_2_176)">
+                        <path
+                            d="M11.5 52.7417C11.5 51.9803 12.3349 51.5138 12.9833 51.9128L23.5482 58.4143C24.1397 58.7783 24.5 59.4231 24.5 60.1176V61.5L12.4598 54.4195C11.8651 54.0698 11.5 53.4315 11.5 52.7417V52.7417Z"
+                            fill="#163874"
+                        ></path>
+                    </g>
+                    <mask
+                        id="mask1_2_176"
+                        style="mask-type:alpha"
+                        maskUnits="userSpaceOnUse"
+                        x="19"
+                        y="9"
+                        width="38"
+                        height="23"
+                    >
+                        <path
+                            d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
+                            fill="#396CAA"
+                        ></path>
+                    </mask>
+                    <g mask="url(#mask1_2_176)">
+                        <path
+                            d="M18 21.3115L36.167 11.9451C37.3171 11.3521 38.6829 11.3521 39.833 11.9451L58 21.3115L40.3567 30.7405C38.8841 31.5275 37.1159 31.5275 35.6433 30.7405L18 21.3115Z"
+                            fill="#173D7A"
+                        ></path>
+                    </g>
+                    <path
+                        d="M37.447 21.565L35 19.9799L37.6941 18.66L40.141 20.245L37.447 21.565Z"
+                        fill="#FF715E"
+                    ></path>
+                    <path
+                        d="M48.9738 30.8646L47.0741 29.7745L49.1792 28.684L51.0789 29.7741L48.9738 30.8646Z"
+                        fill="#173E7B"
+                    ></path>
+                    <path
+                        d="M52.0661 29.0093L50.1635 27.9242L52.2657 26.8282L54.1682 27.9133L52.0661 29.0093Z"
+                        fill="#173E7B"
+                    ></path>
+                    <path
+                        id="strobe_led1"
+                        d="M55.1521 27.1464L53.2538 26.054L55.3602 24.9661L57.2585 26.0586L55.1521 27.1464Z"
+                        fill="#3A6DAB"
+                    ></path>
+                </svg>
+            </div>
+            <div class="Ghost">
+                <svg
+                    width="60"
+                    height="36"
+                    viewBox="0 0 60 36"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M1.96545 19.4296C0.643777 18.6484 0.658726 16.7309 1.99242 15.9705L28.0186 1.12982C29.2467 0.429534 30.7533 0.429533 31.9814 1.12982L58.0076 15.9704C59.3413 16.7309 59.3562 18.6484 58.0346 19.4296L32.5442 34.4962C30.9749 35.4238 29.0251 35.4238 27.4558 34.4962L1.96545 19.4296Z"
+                        fill="#3C4F6D"
+                    ></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-[#000000] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto shadow-2xl border-r border-neutral-dark">
+        <div class="py-4 px-4 flex justify-between items-center border-b border-neutral-dark">
+            <h3 class="text-lg font-semibold text-white">API Categories</h3>
+            <button onclick="closeSidebar()" class="text-gray-400 hover:text-white lg:hidden" aria-label="Close Sidebar">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div id="sidebarContent" class="pt-4 px-4 space-y-3"></div>
+    </div>
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black/50 hidden lg:hidden z-[50]" onclick="closeSidebar()"></div>
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="hidden fixed top-12 right-0 bg-[#000000] border border-neutral-dark p-4 z-[60] shadow-2xl rounded-xl w-80 max-h-96 overflow-y-auto transition-all">
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="text-base font-semibold text-white">Notifications</h4>
+            <button id="clearNotifications" class="text-premium-blue text-sm font-medium hover:text-premium-purple transition-colors">Mark all as read</button>
+        </div>
+        <div id="notifContent" class="space-y-4"></div>
+    </div>
+    <header class="sticky top-0 z-50 bg-[#000000] border-b border-neutral-dark py-4 shadow-md">
+        <div class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto flex items-center px-4 lg:px-0 relative">
+            <button onclick="toggleSidebar()" class="pl-2 transition-all hover:scale-110 lg:hidden" aria-label="Open Sidebar">
+                <i class="fas fa-bars text-white text-xl"></i>
+            </button>
+            <h1 class="text-lg font-bold text-white absolute left-1/2 -translate-x-1/2 lg:relative lg:left-auto lg:translate-x-0 lg:ml-0">Dashboard</h1>
+            <div class="flex-grow"></div>
+            <button onclick="toggleNotifications()" class="relative transition-all hover:scale-110 pr-2" aria-label="Notifications">
+    <i class="fas fa-bell text-white text-xl"></i>
+    <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 hidden"></span>
+            </button>
+        </div>
+    </header>
+    <main class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto px-6 py-8 lg:px-8">
+        <div class="text-center mb-8">
+            <img id="headerImage" src="" alt="Header" class="mx-auto rounded-xl mb-6 w-[80%] md:w-[40%] lg:w-[40%]">
+            <h2 id="apiTitle" class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-premium"></h2>
+            <p id="apiDescription" class="text-base text-neutral-light mb-6"></p>
+            <div class="inline-flex items-center bg-green-900/50 text-green-400 px-4 py-2 rounded-full text-sm font-medium mx-auto">
+                <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                <span id="apiStatus"></span>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-[#000000] rounded-lg p-6 border border-neutral-dark shadow-xl transition-all hover:shadow-premium">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium">Total APIs</h3>
+                    <i class="fa-regular fa-clipboard text-premium-blue text-xl"></i>
+                </div>
+                <div class="flex items-baseline">
+                    <span id="totalEndpoints" class="text-2xl font-bold text-white"></span>
+                    <span class="text-sm text-gray-500 ml-1">endpoints</span>
+                </div>
+            </div>
+            <div class="bg-[#000000] rounded-lg p-6 border border-neutral-dark shadow-xl transition-all hover:shadow-premium">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium">Categories</h3>
+                    <i class="fa-solid fa-layer-group text-green-400 text-xl"></i>
+                </div>
+                <div class="flex items-baseline">
+                    <span id="totalCategories" class="text-2xl font-bold text-white"></span>
+                    <span class="text-sm text-gray-500 ml-1">groups</span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
+            <p class="text-sm text-neutral-light mb-3">
+                Our API provides public endpoints that return JSON responses. No authentication required.
+            </p>
+            <div class="bg-[#000000] border border-neutral-dark p-4 rounded-md">
+                <p class="text-xs text-gray-500 uppercase tracking-wide">Base URL</p>
+                <code id="baseUrl" class="text-sm text-white font-mono"></code>
+            </div>
+        </div>
+        <div id="exampleEndpoint" class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-2">
+                Example Endpoint
+            </h3>
+            <p class="text-sm text-gray-400 mb-4">
+                Example showing request format, parameters, and responses.
+            </p>
+            <div id="exampleContent"></div>
+        </div>
+        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-3 flex items-center">
+                Response Format
+            </h3>
+            <p class="text-sm text-gray-400 mb-3">
+                All responses include operator, timestamp, and responseTime fields.
+            </p>
+            <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark mb-3 rounded-md">
+                <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+                    <span class="text-xs text-gray-500">Output</span>
+                </div>
+                <div class="p-4">
+                    <pre class="text-white text-xs m-0 whitespace-pre-wrap"><code class="language-json" id="responseFormatCode">{
+  "operator": "Rid Coder",
+  "timestamp": "2025-12-27T10:43:41.675Z",
+  "responseTime": "4ms",
+  ...
+}</code></pre>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400">
+                The additional fields depend on the endpoint.
+            </p>
+        </div>
+        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-3">
+                Error Codes
+            </h3>
+            <p class="text-sm text-gray-400 mb-4">
+                Common HTTP status codes you may encounter:
+            </p>
+            <div class="space-y-3">
+                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-sm text-green-400 font-medium">200</span>
+                        <div>
+                            <p class="text-sm text-white font-medium mb-1">Success</p>
+                            <p class="text-xs text-gray-400">Request processed successfully.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-sm text-yellow-400 font-medium">400</span>
+                        <div>
+                            <p class="text-sm text-white font-medium mb-1">Bad Request</p>
+                            <p class="text-xs text-gray-400">Invalid parameters or missing required fields.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-sm text-orange-400 font-medium">404</span>
+                        <div>
+                            <p class="text-sm text-white font-medium mb-1">Not Found</p>
+                            <p class="text-xs text-gray-400">Endpoint doesn't exist. Check URL and method.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-sm text-red-400 font-medium">429</span>
+                        <div>
+                            <p class="text-sm text-white font-medium mb-1">Too Many Requests</p>
+                            <p class="text-xs text-gray-400">Rate limit exceeded. Wait before retrying.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                    <div class="flex items-start gap-3">
+                        <span class="font-mono text-sm text-red-400 font-medium">503</span>
+                        <div>
+                            <p class="text-sm text-white font-medium mb-1">Service Unavailable</p>
+                            <p class="text-xs text-gray-400">Temporarily unavailable. Try again later.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-[#000000] border-t border-neutral-dark py-6 relative z-10 w-full">
+        <div class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="font-semibold text-white mb-3">About</h3>
+                    <p id="aboutText" class="text-sm text-neutral-light leading-relaxed">
+                        This interactive interface allows you to explore and test our comprehensive collection of API endpoints in real-time.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white mb-3">Connect</h3>
+                    <div class="flex gap-3">
+                                  <a id="telegramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
+                            <i class="fab fa-telegram-plane text-lg"></i>
+                  
+                        <a id="instagramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a id="twitterLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a id="githubLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 text-left">
+                <p class="text-sm text-gray-500" id="footerCopyright"></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const sidebarContent = document.getElementById('sidebarContent');
+        const notificationPanel = document.getElementById('notificationPanel');
+        const notifContent = document.getElementById('notifContent');
+        const clearNotificationsBtn = document.getElementById('clearNotifications');
+        const notifBadge = document.getElementById('notifBadge');
+        let notifs = [];
+        let readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+        function relativeTime(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            if (diff < 60000) return 'Just Now';
+            if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+            if (diff < 604800000) return Math.floor(diff / 86400000) + 'd ago';
+            return new Date(timestamp).toLocaleDateString();
+        }
+        function toggleSidebar() {
+            if (window.matchMedia('(min-width: 1024px)').matches) return;
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                closeSidebar();
+            }
+        }
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        function toggleNotifications() {
+            if (notificationPanel.classList.contains('hidden')) {
+                notificationPanel.classList.remove('hidden');
+            } else {
+                notificationPanel.classList.add('hidden');
+            }
+        }
+        function markAsRead(id) {
+            if (!readIds.includes(id)) {
+                readIds.push(id);
+                localStorage.setItem('readNotifications', JSON.stringify(readIds));
+                updateNotifPanel();
+            }
+        }
+        function updateNotifPanel() {
+            const unread = notifs.filter(n => !readIds.includes(n.id));
+            let notifHtml = '';
+            if (unread.length > 0) {
+                notifHtml = unread.map(n => `
+                    <div onclick="markAsRead(${n.id})" class="notification-item py-3 cursor-pointer border-b border-neutral-dark last:border-0">
+                        <h5 class="text-sm font-semibold text-white mb-1">${n.title}</h5>
+                        <p class="text-xs text-neutral-light mb-1">${n.message}</p>
+                        <span class="text-xs text-gray-500">${relativeTime(n.createdAt)}</span>
+                    </div>
+                `).join('');
+                notifBadge.textContent = unread.length;
+                notifBadge.classList.remove('hidden');
+            } else {
+                notifHtml = '<p class="text-xs text-gray-400 text-center py-4">No notifications yet.</p>';
+                notifBadge.classList.add('hidden');
+            }
+            notifContent.innerHTML = notifHtml;
+        }
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('header') && !event.target.closest('#sidebar') && !event.target.closest('#notificationPanel')) {
+                closeSidebar();
+                notificationPanel.classList.add('hidden');
+            }
+        });
+        clearNotificationsBtn.addEventListener('click', () => {
+            const newIds = notifs.map(n => n.id).filter(id => !readIds.includes(id));
+            if (newIds.length > 0) {
+                readIds = [...readIds, ...newIds];
+                localStorage.setItem('readNotifications', JSON.stringify(readIds));
+                updateNotifPanel();
+            }
+        });
+        function initializeIndicator(endpointIndex) {
+            const getTab = document.getElementById(`tab-get-${endpointIndex}`);
+            if (getTab) {
+                const indicator = document.getElementById(`tab-indicator-${endpointIndex}`);
+                indicator.style.left = getTab.offsetLeft + 'px';
+                indicator.style.width = getTab.offsetWidth + 'px';
+            }
+        }
+        function switchMethod(endpointIndex, method) {
+            const tabs = ['GET', 'POST'];
+            tabs.forEach(m => {
+                const tab = document.getElementById(`tab-${m.toLowerCase()}-${endpointIndex}`);
+                if (tab) {
+                    if (m === method) {
+                        tab.classList.add('text-white');
+                        tab.classList.remove('text-gray-500');
+                        const indicator = document.getElementById(`tab-indicator-${endpointIndex}`);
+                        if (indicator) {
+                            indicator.style.left = tab.offsetLeft + 'px';
+                            indicator.style.width = tab.offsetWidth + 'px';
+                        }
+                    } else {
+                        tab.classList.remove('text-white');
+                        tab.classList.add('text-gray-500');
+                    }
+                }
+            });
+        }
+        window.addEventListener('load', async () => {
+            const loader = document.getElementById('loader');
+            const main = document.querySelector('main');
+            try {
+                const setRes = await fetch('/set');
+                const setData = await setRes.json();
+                document.title = setData.name;
+                document.querySelector('meta[name="description"]').content = setData.description;
+                document.querySelector('meta[property="og:title"]').content = setData.name;
+                document.querySelector('meta[property="og:description"]').content = setData.description;
+                document.querySelector('link[rel="icon"]').href = setData.icon;
+                document.getElementById('apiTitle').textContent = setData.name;
+                document.getElementById('apiDescription').textContent = setData.description;
+                document.getElementById('headerImage').src = setData.header.imageSrc[0];
+                document.getElementById('apiStatus').textContent = setData.header.status;
+                             document.getElementById('telegramLink').href = setData.telegram;
+                document.getElementById('twitterLink').href = setData.twitter;
+                             document.getElementById('instagramLink').href = setData.instagram;
+                document.getElementById('githubLink').href = setData.github;
+                document.getElementById('footerCopyright').textContent = `©2023 - ${new Date().getFullYear()} ${setData.name}. Airbyte Synergetic Labs All rights reserved.`;
+                const aboutText = document.getElementById('aboutText');
+
+                notifs = setData.notification || [];
+                updateNotifPanel();
+                const endpointsRes = await fetch('/endpoints');
+                const endpointsData = await endpointsRes.json();
+                const endpoints = endpointsData.endpoints;
+                document.getElementById('totalEndpoints').textContent = endpointsData.count;
+                document.getElementById('totalCategories').textContent = endpoints.length;
+                let sidebarHtml = `
+                    <a href="/docs" class="flex items-center px-3 py-1 text-white hover:bg-[#000000] rounded-xl transition-all hover:shadow-sm ${location.pathname === '/docs' ? 'bg-[#000000]' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-premium-blue">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <div class="border-t border-neutral-dark my-3 -mx-4"></div>
+                    <p class="text-gray-400 text-sm mb-2 font-medium">Available Categories</p>
+                `;
+                for (const cat of endpoints) {
+                    const capitalizedName = cat.name.charAt(0).toUpperCase() + cat.name.slice(1);
+                    const slug = cat.name.toLowerCase().replace(/\s+/g, '-');
+                    const active = location.pathname === `/category/${slug}`;
+                    sidebarHtml += `
+                        <a href="/category/${slug}" class="flex items-center justify-between px-3 py-1 text-white hover:bg-[#000000] rounded-xl transition-all hover:shadow-sm ${active ? 'bg-[#0b0b0b] border-l-4 border-[#eab308] pl-3' : ''}">
+                            <div class="flex items-center">
+                                <i class="fas fa-folder mr-3 text-premium-blue"></i>
+                                ${capitalizedName} (${cat.items.length})
+                            </div>
+                            <i class="material-icons text-lg text-gray-400">keyboard_arrow_right</i>
+                        </a>
+                    `;
+                }
+                sidebarContent.innerHTML = sidebarHtml;
+                // Start polling for notifications
+                setInterval(async () => {
+                    try {
+                        const res = await fetch('/notifications');
+                        const data = await res.json();
+                        notifs = data.notifications || [];
+                        updateNotifPanel();
+                    } catch (err) {
+                        console.error('Failed to fetch notifications:', err);
+                    }
+                }, 5000);
+                // Update times every minute
+                setInterval(updateNotifPanel, 60000);
+                // Set base URL
+                document.getElementById('baseUrl').textContent = window.location.origin;
+                // Build random example endpoint
+                const allItems = endpoints.flatMap(c => c.items);
+                const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
+                const exampleContent = document.getElementById('exampleContent');
+                const alias = randomItem.name.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                const basePath = randomItem.path.split('?')[0];
+                const methods = randomItem.methods;
+                const methodStr = methods.join('/') || 'GET/POST';
+                const primaryMethod = methods.includes('POST') ? 'POST' : 'GET';
+                let curlExample = `curl -X ${primaryMethod} "${window.location.origin}${basePath}"`;
+                let jsExample = `fetch('${window.location.origin}${basePath}', {\n  method: '${primaryMethod}'`;
+                let paramsHtml = '';
+                let curlBody = '';
+                let jsBody = '';
+                if (randomItem.params && randomItem.params.length > 0) {
+                    paramsHtml = randomItem.params.map(p => `
+                        <div class="text-sm space-y-1">
+                            <span class="font-mono font-medium text-gray-200 block">${p.name}</span>
+                            <span class="text-gray-400 text-xs block">Type: string</span>
+                            <p class="text-gray-400 text-xs break-words">${p.desc}</p>
+                            ${p.example ? `<span class="text-gray-500 text-xs block">Example:</span><code class="bg-[#000000] px-1 py-0.5 rounded break-all max-w-full text-xs text-gray-300">${p.example}</code>` : ''}
+                        </div>
+                    `).join('');
+                    const exampleParams = {};
+                    randomItem.params.forEach(p => {
+                        if (p.example) exampleParams[p.name] = p.example;
+                    });
+                    if (Object.keys(exampleParams).length > 0) {
+                        curlBody = ` \\\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(exampleParams)}'`;
+                        jsBody = `,\n  headers: {\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify(${JSON.stringify(exampleParams)})\n`;
+                    }
+                }
+                curlExample += curlBody;
+                jsExample += jsBody + `})\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error(error));`;
+                let tabsHtml = `
+                    <div class="relative border-b border-neutral-dark mb-3">
+                        <div class="flex relative">
+                            <button class="endpoint-tab px-4 py-2 text-sm font-medium text-white transition-colors" data-tab="curl-example">
+                                cURL
+                            </button>
+                            <button class="endpoint-tab px-4 py-2 text-sm font-medium text-gray-400 hover:text-gray-200 transition-colors" data-tab="js-example">
+                                JavaScript
+                            </button>
+                            <div class="tab-indicator" id="doc-tab-indicator" style="opacity: 1; left: 0px; width: 64px;"></div>
+                        </div>
+                    </div>
+                `;
+                let curlContentHtml = `
+                    <div id="curl-example" class="endpoint-content mb-3 text-xs">
+                        <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark rounded-md">
+                            <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+                                <span class="text-xs text-gray-500">Shell</span>
+                            </div>
+                            <div class="p-4">
+                                <pre class="text-white text-xs m-0"><code class="language-bash">${curlExample}</code></pre>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">
+                            Terminal command - replace parameter values with your data.
+                        </p>
+                    </div>
+                `;
+                let jsContentHtml = `
+                    <div id="js-example" class="endpoint-content hidden mb-3 text-xs">
+                        <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark rounded-md">
+                            <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+                                <span class="text-xs text-gray-500">JavaScript</span>
+                            </div>
+                            <div class="p-4">
+                                <pre class="text-white text-xs m-0"><code class="language-javascript">const body = ${JSON.stringify(randomItem.params ? randomItem.params.reduce((acc, p) => { if (p.example) acc[p.name] = p.example; return acc; }, {}) : {})};
+
+fetch('${window.location.origin}${basePath}', {
+  method: '${primaryMethod}'${jsBody ? `,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(body)` : ''}
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });</code></pre>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">
+                            JavaScript using Fetch API.
+                        </p>
+                    </div>
+                `;
+                let paramsSection = '';
+                if (randomItem.params && randomItem.params.length > 0) {
+                    paramsSection = `
+                        <div class="mb-4">
+                            <h5 class="text-sm font-medium text-white mb-2">Parameters</h5>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Parameters for the request.
+                            </p>
+                            <div class="bg-[#000000] border border-neutral-dark p-4 space-y-4 rounded-md overflow-hidden">
+                                ${paramsHtml}
+                            </div>
+                        </div>
+                    `;
+                }
+                exampleContent.innerHTML = `
+                    <div class="mb-4">
+                        <h4 class="text-base font-medium text-white mb-2">
+                            ${alias}
+                        </h4>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="inline-block px-3 py-1 bg-gradient-premium border border-neutral-dark text-white text-xs font-mono font-medium rounded-md">
+                                ${methodStr}
+                            </span>
+                            <code class="text-xs text-gray-300 bg-[#000000] px-2 py-1 border border-neutral-dark rounded-md">
+                                ${basePath}
+                            </code>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="text-sm font-medium text-white mb-2">Request Examples</h5>
+                        <p class="text-xs text-gray-400 mb-3">
+                            Choose the method that fits your environment. This endpoint supports ${methodStr} methods.
+                        </p>
+                        ${tabsHtml}
+                        ${curlContentHtml}
+                        ${jsContentHtml}
+                    </div>
+                    ${paramsSection}
+                `;
+                // Initialize tabs
+                const firstTab = document.querySelector('.endpoint-tab');
+                const indicator = document.getElementById('doc-tab-indicator');
+                if (firstTab && indicator) {
+                    indicator.style.left = firstTab.offsetLeft + 'px';
+                    indicator.style.width = firstTab.offsetWidth + 'px';
+                }
+                const endpointTabs = document.querySelectorAll('.endpoint-tab');
+                endpointTabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        const targetId = this.dataset.tab;
+                        const siblingTabs = this.parentElement.querySelectorAll('.endpoint-tab');
+                        siblingTabs.forEach(t => {
+                            t.classList.remove('text-white');
+                            t.classList.add('text-gray-400', 'hover:text-gray-200');
+                        });
+                        this.classList.remove('text-gray-400', 'hover:text-gray-200');
+                        this.classList.add('text-white');
+                        const indicator = document.getElementById('doc-tab-indicator');
+                        if (indicator) {
+                            indicator.style.left = this.offsetLeft + 'px';
+                            indicator.style.width = this.offsetWidth + 'px';
+                        }
+                        const contents = this.closest('.mb-4').querySelectorAll('.endpoint-content');
+                        contents.forEach(content => {
+                            content.classList.add('hidden');
+                        });
+                        document.getElementById(targetId).classList.remove('hidden');
+                        hljs.highlightAll();
+                    });
+                });
+                hljs.highlightAll();
+                // Make operator dynamic
+                const responseFormatCode = document.getElementById('responseFormatCode');
+                if (responseFormatCode) {
+                    responseFormatCode.innerHTML = responseFormatCode.innerHTML.replace('"AjiroDesu"', `"${setData.operator}"`);
+                }
+            } finally {
+                loader.classList.add('hidden');
+                main.classList.add('loaded');
+            }
+        });
+    </script>
+</body>
+</html>
