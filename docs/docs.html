@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Interactive API documentation dashboard with real-time testing capabilities">
+    <meta name="theme-color" content="#0F172A">
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content="API documentation, RESTful APIs, developer tools, dark theme API dashboard">
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
+    <meta name="keywords" content="API documentation, RESTful APIs, developer tools, API testing, developer dashboard">
+    <meta property="og:title" content="API Documentation Dashboard">
+    <meta property="og:description" content="Explore and test API endpoints with our interactive documentation dashboard">
     <meta property="og:type" content="website">
-    <title></title>
-    <link rel="icon" href="" type="image/png">
+    <title>KAYIZA API Dashboard | Developer Portal</title>
+    <link rel="icon" href="https://img.icons8.com/color/96/api-settings.png" type="image/png">
     <link rel="canonical" href="/">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -30,10 +30,9 @@
                         'sans': ['Inter', 'system-ui', 'sans-serif']
                     },
                     colors: {
-                        'premium-blue': '#3B82F6',
-                        'premium-purple': '#8B5CF6',
-                        'neutral-dark': '#333333',
-                        'neutral-light': '#D1D5DB'
+                        'primary': '#0F172A',
+                        'secondary': '#1E293B',
+                        'accent': '#3B82F6'
                     }
                 }
             }
@@ -45,6 +44,7 @@
                 display: none !important;
             }
         }
+        
         /* Loader styles */
         #loader {
             position: fixed;
@@ -52,7 +52,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000000;
+            background: #0F172A;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -64,6 +64,98 @@
             opacity: 0;
             pointer-events: none;
         }
+        
+        /* From Uiverse.io by kennyotsu */
+        .card {
+            /* color used to softly clip top and bottom of the .words container */
+            --bg-color: #0F172A;
+            background-color: var(--bg-color);
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
+            border: 1px solid #1E293B;
+        }
+        .loader {
+            color: #94a3b8;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            font-size: 25px;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            height: 40px;
+            padding: 10px 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            border-radius: 8px;
+        }
+
+        .words {
+            overflow: hidden;
+            position: relative;
+        }
+        .words::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                var(--bg-color) 10%,
+                transparent 30%,
+                transparent 70%,
+                var(--bg-color) 90%
+            );
+            z-index: 20;
+        }
+
+        .word {
+            display: block;
+            height: 100%;
+            padding-left: 6px;
+            color: #3B82F6;
+            animation: spin_4991 4s infinite;
+        }
+
+        @keyframes spin_4991 {
+            10% {
+                -webkit-transform: translateY(-102%);
+                transform: translateY(-102%);
+            }
+
+            25% {
+                -webkit-transform: translateY(-100%);
+                transform: translateY(-100%);
+            }
+
+            35% {
+                -webkit-transform: translateY(-202%);
+                transform: translateY(-202%);
+            }
+
+            50% {
+                -webkit-transform: translateY(-200%);
+                transform: translateY(-200%);
+            }
+
+            60% {
+                -webkit-transform: translateY(-302%);
+                transform: translateY(-302%);
+            }
+
+            75% {
+                -webkit-transform: translateY(-300%);
+                transform: translateY(-300%);
+            }
+
+            85% {
+                -webkit-transform: translateY(-402%);
+                transform: translateY(-402%);
+            }
+
+            100% {
+                -webkit-transform: translateY(-400%);
+                transform: translateY(-400%);
+            }
+        }
+
         .transition-all {
             transition: all 0.3s ease;
         }
@@ -73,32 +165,17 @@
         .notification-item.read {
             opacity: 0.6;
         }
-        body {
-            position: relative;
+        
+        /* Removed grid lines (body::before) */
+        
+        .bg-gradient-accent {
+            background: linear-gradient(to right, #3B82F6, #2563EB);
         }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            z-index: -1;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
+        .hover\:shadow-accent:hover {
+            box-shadow: 0 4px 20px rgba(59,130,246,0.4);
         }
-        .bg-gradient-premium {
-            background: linear-gradient(to right, #3B82F6, #8B5CF6);
-        }
-        .hover\:shadow-premium:hover {
-            box-shadow: 0 4px 20px rgba(59,130,246,0.3);
-        }
-        .text-premium {
-            color: #D1D5DB;
+        .text-light {
+            color: #CBD5E1;
         }
         main {
             opacity: 0;
@@ -113,7 +190,7 @@
             position: absolute;
             bottom: 0;
             height: 2px;
-            background-color: #8B5CF6;
+            background-color: #3B82F6;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         pre code.hljs {
@@ -121,346 +198,122 @@
             padding: 0 !important;
         }
         
-        /* New Loader Styles */
-        .container_SevMini {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        /* Custom color classes for 60-30-10 ratio */
+        .bg-primary-60 {
+            background-color: #0F172A;
         }
-
-        .Ghost {
-            transform: translate(0px, -25px);
-            z-index: -1;
-            animation: opacidad 4s infinite ease-in-out;
+        .bg-secondary-30 {
+            background-color: #1E293B;
         }
-
-        @keyframes opacidad {
-            0% {
-                opacity: 1;
-                scale: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-                scale: 0.9;
-            }
-
-            100% {
-                opacity: 1;
-                scale: 1;
-            }
+        .bg-accent-10 {
+            background-color: #3B82F6;
         }
-
-        @keyframes estroboscopico {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-
-            51% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 1;
-            }
+        .text-primary {
+            color: #0F172A;
         }
-
-        @keyframes rebote {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
+        .text-secondary {
+            color: #1E293B;
         }
-
-        @keyframes estroboscopico1 {
-            0%,
-            50%,
-            100% {
-                fill: rgb(255, 95, 74);
-            }
-
-            25%,
-            75% {
-                fill: rgb(16, 53, 115);
-            }
+        .text-accent {
+            color: #3B82F6;
         }
-
-        @keyframes estroboscopico2 {
-            0%,
-            50%,
-            100% {
-                fill: #17e300;
-            }
-
-            25%,
-            75% {
-                fill: #17e300b4;
-            }
+        .border-secondary {
+            border-color: #1E293B;
         }
-
-        .SevMini {
-            animation: rebote 4s infinite ease-in-out;
+        .border-accent {
+            border-color: #3B82F6;
         }
-
-        #strobe_led1 {
-            animation: estroboscopico 0.5s infinite;
+        
+        /* Social icon animations */
+        .social-icon {
+            transition: all 0.3s ease;
         }
-
-        #strobe_color1 {
-            animation: estroboscopico2 0.8s infinite;
-        }
-
-        #strobe_color3 {
-            animation: estroboscopico1 0.8s infinite;
-            animation-delay: 3s;
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
         }
     </style>
 </head>
-<body class="bg-[#000000] text-premium antialiased font-sans min-h-screen">
+<body class="bg-primary-60 text-light antialiased font-sans min-h-screen flex flex-col">
     <!-- Loader -->
     <div id="loader">
-        <!-- From Uiverse.io by Juanes200122 --> 
-        <div class="container_SevMini">
-            <div class="SevMini">
-                <svg
-                    width="74"
-                    height="90"
-                    viewBox="0 0 74 90"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M40 76.5L72 57V69.8615C72 70.5673 71.628 71.2209 71.0211 71.5812L40 90V76.5Z"
-                        fill="#396CAA"
-                    ></path>
-                    <path
-                        d="M34 75.7077L2 57V69.8615C2 70.5673 2.37203 71.2209 2.97892 71.5812L34 90V75.7077Z"
-                        fill="#396DAC"
-                    ></path>
-                    <path d="M34 76.5H40V90H34V76.5Z" fill="#396CAA"></path>
-                    <path
-                        d="M3.27905 55.593L35.2806 37.5438C36.3478 36.9419 37.6522 36.9419 38.7194 37.5438L70.721 55.593C71.7294 56.1618 71.7406 57.6102 70.7411 58.1945L39.2712 76.593C37.8682 77.4133 36.1318 77.4133 34.7288 76.593L3.25887 58.1945C2.25937 57.6102 2.27061 56.1618 3.27905 55.593Z"
-                        fill="#163C79"
-                        stroke="#396CAA"
-                    ></path>
-                    <path
-                        d="M40 79L72 60V70.4001C72 71.1151 71.6183 71.7758 70.9987 72.1329L40 90V79Z"
-                        fill="#173D7A"
-                    ></path>
-                    <path d="M34 79L3 61V71.5751L34 90V79Z" fill="#0665B2"></path>
-                    <path
-                        id="strobe_color1"
-                        d="M58 72.5L60.5 71V74L58 75.5V72.5Z"
-                        fill="#FF715E"
-                    ></path>
-                    <path
-                        id="strobe_color2"
-                        d="M63 69.5L65.5 68V71L63 72.5V69.5Z"
-                        fill="#17e300b4"
-                    ></path>
-                    <path d="M68 66.5L70.5 65V68L68 69.5V66.5Z" fill="#FF715E"></path>
-                    <path
-                        d="M40 58.5L72 39V51.8615C72 52.5673 71.628 53.2209 71.0211 53.5812L40 72V58.5Z"
-                        fill="#396CAA"
-                    ></path>
-                    <path
-                        d="M34 57.7077L2 39V51.8615C2 52.5673 2.37203 53.2209 2.97892 53.5812L34 72V57.7077Z"
-                        fill="#396DAC"
-                    ></path>
-                    <path d="M34 58.5H40V72H34V58.5Z" fill="#396CAA"></path>
-                    <path
-                        d="M3.27905 37.593L35.2806 19.5438C36.3478 18.9419 37.6522 18.9419 38.7194 19.5438L70.721 37.593C71.7294 38.1618 71.7406 39.6102 70.7411 40.1945L39.2712 58.593C37.8682 59.4133 36.1318 59.4133 34.7288 58.593L3.25887 40.1945C2.25937 39.6102 2.27061 38.1618 3.27905 37.593Z"
-                        fill="#163C79"
-                        stroke="#396CAA"
-                    ></path>
-                    <path
-                        d="M40 61L72 42V52.4001C72 53.1151 71.6183 53.7758 70.9987 54.1329L40 72V61Z"
-                        fill="#173D7A"
-                    ></path>
-                    <path d="M34 61L3 43V53.5751L34 72V61Z" fill="#0665B2"></path>
-                    <path d="M58 54.5L60.5 53V56L58 57.5V54.5Z" fill="#FF715E"></path>
-                    <path d="M63 51.5L65.5 50V53L63 54.5V51.5Z" fill="black"></path>
-                    <path
-                        id="strobe_color1"
-                        d="M63 51.5L65.5 50V53L63 54.5V51.5Z"
-                        fill="#FF715E"
-                    ></path>
-                    <path d="M68 48.5L70.5 47V50L68 51.5V48.5Z" fill="#FF715E"></path>
-                    <path
-                        d="M40 40.5L72 21V33.8615C72 34.5673 71.628 35.2209 71.0211 35.5812L40 54V40.5Z"
-                        fill="#396CAA"
-                    ></path>
-                    <path
-                        d="M34 39.7077L2 21V33.8615C2 34.5673 2.37203 35.2209 2.97892 35.5812L34 54V39.7077Z"
-                        fill="#396DAC"
-                    ></path>
-                    <path d="M34 40.5H40V54H34V40.5Z" fill="#396CAA"></path>
-                    <path
-                        d="M3.27905 19.593L35.2806 1.54381C36.3478 0.941872 37.6522 0.941872 38.7194 1.54381L70.721 19.593C71.7294 20.1618 71.7406 21.6102 70.7411 22.1945L39.2712 40.593C37.8682 41.4133 36.1318 41.4133 34.7288 40.593L3.25887 22.1945C2.25937 21.6102 2.27061 20.1618 3.27905 19.593Z"
-                        fill="#124E89"
-                        stroke="#396CAA"
-                    ></path>
-                    <path
-                        d="M40 43L72 24V34.4001C72 35.1151 71.6183 35.7758 70.9987 36.1329L40 54V43Z"
-                        fill="#173D7A"
-                    ></path>
-                    <path d="M34 43L3 25V35.5751L34 54V43Z" fill="#0665B2"></path>
-                    <path d="M68 30.5L70.5 29V32L68 33.5V30.5Z" fill="#FF715E"></path>
-                    <path
-                        id="strobe_color3"
-                        d="M58 36.5L60.5 35V38L58 39.5V36.5Z"
-                        fill="#FF715E"
-                    ></path>
-                    <path d="M63 33.5L65.5 32V35L63 36.5V33.5Z" fill="#FF715E"></path>
-                    <path
-                        d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
-                        fill="#396CAA"
-                    ></path>
-                    <path
-                        d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
-                        fill="#396CAA"
-                    ></path>
-                    <mask
-                        id="mask0_2_176"
-                        style="mask-type:alpha"
-                        maskUnits="userSpaceOnUse"
-                        x="11"
-                        y="51"
-                        width="14"
-                        height="11"
-                    >
-                        <path
-                            d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
-                            fill="#396CAA"
-                        ></path>
-                    </mask>
-                    <g mask="url(#mask0_2_176)">
-                        <path
-                            d="M11.5 52.7417C11.5 51.9803 12.3349 51.5138 12.9833 51.9128L23.5482 58.4143C24.1397 58.7783 24.5 59.4231 24.5 60.1176V61.5L12.4598 54.4195C11.8651 54.0698 11.5 53.4315 11.5 52.7417V52.7417Z"
-                            fill="#163874"
-                        ></path>
-                    </g>
-                    <mask
-                        id="mask1_2_176"
-                        style="mask-type:alpha"
-                        maskUnits="userSpaceOnUse"
-                        x="19"
-                        y="9"
-                        width="38"
-                        height="23"
-                    >
-                        <path
-                            d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
-                            fill="#396CAA"
-                        ></path>
-                    </mask>
-                    <g mask="url(#mask1_2_176)">
-                        <path
-                            d="M18 21.3115L36.167 11.9451C37.3171 11.3521 38.6829 11.3521 39.833 11.9451L58 21.3115L40.3567 30.7405C38.8841 31.5275 37.1159 31.5275 35.6433 30.7405L18 21.3115Z"
-                            fill="#173D7A"
-                        ></path>
-                    </g>
-                    <path
-                        d="M37.447 21.565L35 19.9799L37.6941 18.66L40.141 20.245L37.447 21.565Z"
-                        fill="#FF715E"
-                    ></path>
-                    <path
-                        d="M48.9738 30.8646L47.0741 29.7745L49.1792 28.684L51.0789 29.7741L48.9738 30.8646Z"
-                        fill="#173E7B"
-                    ></path>
-                    <path
-                        d="M52.0661 29.0093L50.1635 27.9242L52.2657 26.8282L54.1682 27.9133L52.0661 29.0093Z"
-                        fill="#173E7B"
-                    ></path>
-                    <path
-                        id="strobe_led1"
-                        d="M55.1521 27.1464L53.2538 26.054L55.3602 24.9661L57.2585 26.0586L55.1521 27.1464Z"
-                        fill="#3A6DAB"
-                    ></path>
-                </svg>
-            </div>
-            <div class="Ghost">
-                <svg
-                    width="60"
-                    height="36"
-                    viewBox="0 0 60 36"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M1.96545 19.4296C0.643777 18.6484 0.658726 16.7309 1.99242 15.9705L28.0186 1.12982C29.2467 0.429534 30.7533 0.429533 31.9814 1.12982L58.0076 15.9704C59.3413 16.7309 59.3562 18.6484 58.0346 19.4296L32.5442 34.4962C30.9749 35.4238 29.0251 35.4238 27.4558 34.4962L1.96545 19.4296Z"
-                        fill="#3C4F6D"
-                    ></path>
-                </svg>
+        <!-- From Uiverse.io by kennyotsu -->
+        <div class="card">
+            <div class="loader">
+                <p>loading</p>
+                <div class="words">
+                    <span class="word">APIs</span>
+                    <span class="word">docs</span>
+                    <span class="word">endpoints</span>
+                    <span class="word">SDKs</span>
+                    <span class="word">APIs</span>
+                </div>
             </div>
         </div>
     </div>
+    
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-[#000000] z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto shadow-2xl border-r border-neutral-dark">
-        <div class="py-4 px-4 flex justify-between items-center border-b border-neutral-dark">
-            <h3 class="text-lg font-semibold text-white">API Categories</h3>
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-primary-60 z-[60] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto shadow-2xl border-r border-secondary">
+        <div class="py-4 px-4 flex justify-between items-center border-b border-secondary">
+            <h3 class="text-lg font-semibold text-white">KAYIZA APIS Categories</h3>
             <button onclick="closeSidebar()" class="text-gray-400 hover:text-white lg:hidden" aria-label="Close Sidebar">
                 <i class="fas fa-times text-xl"></i>
             </button>
         </div>
         <div id="sidebarContent" class="pt-4 px-4 space-y-3"></div>
     </div>
+    
     <!-- Overlay -->
     <div id="overlay" class="fixed inset-0 bg-black/50 hidden lg:hidden z-[50]" onclick="closeSidebar()"></div>
+    
     <!-- Notification Panel -->
-    <div id="notificationPanel" class="hidden fixed top-12 right-0 bg-[#000000] border border-neutral-dark p-4 z-[60] shadow-2xl rounded-xl w-80 max-h-96 overflow-y-auto transition-all">
+    <div id="notificationPanel" class="hidden fixed top-12 right-0 bg-primary-60 border border-secondary p-4 z-[60] shadow-2xl rounded-xl w-80 max-h-96 overflow-y-auto transition-all">
         <div class="flex justify-between items-center mb-4">
             <h4 class="text-base font-semibold text-white">Notifications</h4>
-            <button id="clearNotifications" class="text-premium-blue text-sm font-medium hover:text-premium-purple transition-colors">Mark all as read</button>
+            <button id="clearNotifications" class="text-accent text-sm font-medium hover:text-blue-400 transition-colors">Mark all as read</button>
         </div>
         <div id="notifContent" class="space-y-4"></div>
     </div>
-    <header class="sticky top-0 z-50 bg-[#000000] border-b border-neutral-dark py-4 shadow-md">
+    
+    <header class="sticky top-0 z-50 bg-primary-60 border-b border-secondary py-4 shadow-lg">
         <div class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto flex items-center px-4 lg:px-0 relative">
             <button onclick="toggleSidebar()" class="pl-2 transition-all hover:scale-110 lg:hidden" aria-label="Open Sidebar">
                 <i class="fas fa-bars text-white text-xl"></i>
             </button>
-            <h1 class="text-lg font-bold text-white absolute left-1/2 -translate-x-1/2 lg:relative lg:left-auto lg:translate-x-0 lg:ml-0">Dashboard</h1>
+            <h1 class="text-lg font-bold text-white absolute left-1/2 -translate-x-1/2 lg:relative lg:left-auto lg:translate-x-0 lg:ml-0">KAYIZA DASH</h1>
             <div class="flex-grow"></div>
             <button onclick="toggleNotifications()" class="relative transition-all hover:scale-110 pr-2" aria-label="Notifications">
-    <i class="fas fa-bell text-white text-xl"></i>
-    <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 hidden"></span>
+                <i class="fas fa-bell text-white text-xl"></i>
+                <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 hidden"></span>
             </button>
         </div>
     </header>
+    
     <main class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto px-6 py-8 lg:px-8">
         <div class="text-center mb-8">
-            <img id="headerImage" src="" alt="Header" class="mx-auto rounded-xl mb-6 w-[80%] md:w-[40%] lg:w-[40%]">
-            <h2 id="apiTitle" class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-premium"></h2>
-            <p id="apiDescription" class="text-base text-neutral-light mb-6"></p>
+            <img id="headerImage" src="https://img.icons8.com/color/96/api-settings.png" alt="API Dashboard" class="mx-auto rounded-xl mb-6 w-24 h-24 md:w-32 md:h-32">
+            <h2 id="apiTitle" class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-accent"></h2>
+            <p id="apiDescription" class="text-base text-light mb-6"></p>
             <div class="inline-flex items-center bg-green-900/50 text-green-400 px-4 py-2 rounded-full text-sm font-medium mx-auto">
                 <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
                 <span id="apiStatus"></span>
             </div>
         </div>
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="bg-[#000000] rounded-lg p-6 border border-neutral-dark shadow-xl transition-all hover:shadow-premium">
+            <div class="bg-primary-60 rounded-lg p-6 border border-secondary shadow-xl transition-all hover:shadow-accent">
                 <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium">Total APIs</h3>
-                    <i class="fa-regular fa-clipboard text-premium-blue text-xl"></i>
+                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-accent">Total APIs</h3>
+                    <i class="fa-regular fa-clipboard text-accent text-xl"></i>
                 </div>
                 <div class="flex items-baseline">
                     <span id="totalEndpoints" class="text-2xl font-bold text-white"></span>
                     <span class="text-sm text-gray-500 ml-1">endpoints</span>
                 </div>
             </div>
-            <div class="bg-[#000000] rounded-lg p-6 border border-neutral-dark shadow-xl transition-all hover:shadow-premium">
+            <div class="bg-primary-60 rounded-lg p-6 border border-secondary shadow-xl transition-all hover:shadow-accent">
                 <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium">Categories</h3>
+                    <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-accent">Categories</h3>
                     <i class="fa-solid fa-layer-group text-green-400 text-xl"></i>
                 </div>
                 <div class="flex items-baseline">
@@ -469,17 +322,19 @@
                 </div>
             </div>
         </div>
-        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-            <p class="text-sm text-neutral-light mb-3">
+        
+        <div class="bg-primary-60 border border-secondary p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-accent">
+            <p class="text-sm text-light mb-3">
                 Our API provides public endpoints that return JSON responses. No authentication required.
             </p>
-            <div class="bg-[#000000] border border-neutral-dark p-4 rounded-md">
+            <div class="bg-primary-60 border border-secondary p-4 rounded-md">
                 <p class="text-xs text-gray-500 uppercase tracking-wide">Base URL</p>
                 <code id="baseUrl" class="text-sm text-white font-mono"></code>
             </div>
         </div>
-        <div id="exampleEndpoint" class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-2">
+        
+        <div id="exampleEndpoint" class="bg-primary-60 border border-secondary p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-accent">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-accent mb-2">
                 Example Endpoint
             </h3>
             <p class="text-sm text-gray-400 mb-4">
@@ -487,15 +342,16 @@
             </p>
             <div id="exampleContent"></div>
         </div>
-        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-3 flex items-center">
+        
+        <div class="bg-primary-60 border border-secondary p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-accent">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-accent mb-3 flex items-center">
                 Response Format
             </h3>
             <p class="text-sm text-gray-400 mb-3">
                 All responses include operator, timestamp, and responseTime fields.
             </p>
-            <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark mb-3 rounded-md">
-                <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+            <div class="bg-primary-60 text-white font-mono text-xs border border-secondary mb-3 rounded-md">
+                <div class="px-3 py-2 bg-primary-60 border-b border-secondary rounded-t-md">
                     <span class="text-xs text-gray-500">Output</span>
                 </div>
                 <div class="p-4">
@@ -511,15 +367,16 @@
                 The additional fields depend on the endpoint.
             </p>
         </div>
-        <div class="bg-[#000000] border border-neutral-dark p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-premium mb-3">
+        
+        <div class="bg-primary-60 border border-secondary p-6 mb-6 rounded-lg shadow-md transition-all hover:shadow-accent">
+            <h3 class="text-lg font-medium bg-clip-text text-transparent bg-gradient-accent mb-3">
                 Error Codes
             </h3>
             <p class="text-sm text-gray-400 mb-4">
                 Common HTTP status codes you may encounter:
             </p>
             <div class="space-y-3">
-                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                <div class="bg-primary-60 border border-gray-700 p-4 rounded-md">
                     <div class="flex items-start gap-3">
                         <span class="font-mono text-sm text-green-400 font-medium">200</span>
                         <div>
@@ -528,7 +385,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                <div class="bg-primary-60 border border-gray-700 p-4 rounded-md">
                     <div class="flex items-start gap-3">
                         <span class="font-mono text-sm text-yellow-400 font-medium">400</span>
                         <div>
@@ -537,7 +394,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                <div class="bg-primary-60 border border-gray-700 p-4 rounded-md">
                     <div class="flex items-start gap-3">
                         <span class="font-mono text-sm text-orange-400 font-medium">404</span>
                         <div>
@@ -546,7 +403,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                <div class="bg-primary-60 border border-gray-700 p-4 rounded-md">
                     <div class="flex items-start gap-3">
                         <span class="font-mono text-sm text-red-400 font-medium">429</span>
                         <div>
@@ -555,7 +412,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#000000] border border-[#2E2E2E] p-4 rounded-md">
+                <div class="bg-primary-60 border border-gray-700 p-4 rounded-md">
                     <div class="flex items-start gap-3">
                         <span class="font-mono text-sm text-red-400 font-medium">503</span>
                         <div>
@@ -567,38 +424,48 @@
             </div>
         </div>
     </main>
-    <footer class="bg-[#000000] border-t border-neutral-dark py-6 relative z-10 w-full">
-        <div class="max-w-2xl mx-auto lg:ml-[calc(50%-16rem)] lg:max-w-3xl lg:mr-auto px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div>
-                    <h3 class="font-semibold text-white mb-3">About</h3>
-                    <p id="aboutText" class="text-sm text-neutral-light leading-relaxed">
-                        This interactive interface allows you to explore and test our comprehensive collection of API endpoints in real-time.
-                    </p>
+    
+    <!-- Footer -->
+    <footer class="bg-secondary-30 border-t border-secondary py-8">
+        <div class="max-w-2xl lg:max-w-3xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold text-white mb-3">KAYIZA API DASHBOARD</h3>
+                    <p class="text-light text-sm">Empowering developers with powerful APIs</p>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-3">Connect</h3>
-                    <div class="flex gap-3">
-                                  <a id="telegramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-telegram-plane text-lg"></i>
-                  
-                        <a id="instagramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-instagram text-lg"></i>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://github.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-github text-light text-lg"></i>
                         </a>
-                        <a id="twitterLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-twitter text-lg"></i>
+                        <a href="https://twitter.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-twitter text-light text-lg"></i>
                         </a>
-                        <a id="githubLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-github text-lg"></i>
+                        <a href="https://t.me/Ridzcoder" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-telegram text-light text-lg"></i>
+                        </a>
+                        <a href="https://instagram.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-instagram text-light text-lg"></i>
+                        </a>
+                        <a href="https://youtube.com/@ridz-coder" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-youtube text-light text-lg"></i>
                         </a>
                     </div>
-                </div>
+              
             </div>
-            <div class="pt-8 border-t border-gray-800 text-left">
-                <p class="text-sm text-gray-500" id="footerCopyright"></p>
+            
+            <div class="mt-8 pt-6 border-t border-secondary text-center">
+                <p class="text-sm text-light">
+                    &copy; 2024 - 2026 Airbyte Synergetic Labs. All rights reserved.
+                    <span class="block md:inline mt-2 md:mt-0">
+                        Built with <i class="fas fa-heart text-red-500 mx-1"></i> for developers worldwide
+                    </span>
+                </p>
             </div>
         </div>
     </footer>
+    
     <script>
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -609,6 +476,7 @@
         const notifBadge = document.getElementById('notifBadge');
         let notifs = [];
         let readIds = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+        
         function relativeTime(timestamp) {
             const now = Date.now();
             const diff = now - timestamp;
@@ -618,6 +486,7 @@
             if (diff < 604800000) return Math.floor(diff / 86400000) + 'd ago';
             return new Date(timestamp).toLocaleDateString();
         }
+        
         function toggleSidebar() {
             if (window.matchMedia('(min-width: 1024px)').matches) return;
             if (sidebar.classList.contains('-translate-x-full')) {
@@ -628,11 +497,13 @@
                 closeSidebar();
             }
         }
+        
         function closeSidebar() {
             sidebar.classList.add('-translate-x-full');
             overlay.classList.add('hidden');
             document.body.style.overflow = '';
         }
+        
         function toggleNotifications() {
             if (notificationPanel.classList.contains('hidden')) {
                 notificationPanel.classList.remove('hidden');
@@ -640,6 +511,7 @@
                 notificationPanel.classList.add('hidden');
             }
         }
+        
         function markAsRead(id) {
             if (!readIds.includes(id)) {
                 readIds.push(id);
@@ -647,14 +519,15 @@
                 updateNotifPanel();
             }
         }
+        
         function updateNotifPanel() {
             const unread = notifs.filter(n => !readIds.includes(n.id));
             let notifHtml = '';
             if (unread.length > 0) {
                 notifHtml = unread.map(n => `
-                    <div onclick="markAsRead(${n.id})" class="notification-item py-3 cursor-pointer border-b border-neutral-dark last:border-0">
+                    <div onclick="markAsRead(${n.id})" class="notification-item py-3 cursor-pointer border-b border-secondary last:border-0">
                         <h5 class="text-sm font-semibold text-white mb-1">${n.title}</h5>
-                        <p class="text-xs text-neutral-light mb-1">${n.message}</p>
+                        <p class="text-xs text-light mb-1">${n.message}</p>
                         <span class="text-xs text-gray-500">${relativeTime(n.createdAt)}</span>
                     </div>
                 `).join('');
@@ -666,12 +539,14 @@
             }
             notifContent.innerHTML = notifHtml;
         }
+        
         document.addEventListener('click', (event) => {
             if (!event.target.closest('header') && !event.target.closest('#sidebar') && !event.target.closest('#notificationPanel')) {
                 closeSidebar();
                 notificationPanel.classList.add('hidden');
             }
         });
+        
         clearNotificationsBtn.addEventListener('click', () => {
             const newIds = notifs.map(n => n.id).filter(id => !readIds.includes(id));
             if (newIds.length > 0) {
@@ -680,6 +555,7 @@
                 updateNotifPanel();
             }
         });
+        
         function initializeIndicator(endpointIndex) {
             const getTab = document.getElementById(`tab-get-${endpointIndex}`);
             if (getTab) {
@@ -688,6 +564,7 @@
                 indicator.style.width = getTab.offsetWidth + 'px';
             }
         }
+        
         function switchMethod(endpointIndex, method) {
             const tabs = ['GET', 'POST'];
             tabs.forEach(m => {
@@ -708,111 +585,124 @@
                 }
             });
         }
+        
         window.addEventListener('load', async () => {
             const loader = document.getElementById('loader');
             const main = document.querySelector('main');
+            
             try {
+                // Simulate API fetch
                 const setRes = await fetch('/set');
                 const setData = await setRes.json();
-                document.title = setData.name;
-                document.querySelector('meta[name="description"]').content = setData.description;
-                document.querySelector('meta[property="og:title"]').content = setData.name;
-                document.querySelector('meta[property="og:description"]').content = setData.description;
-                document.querySelector('link[rel="icon"]').href = setData.icon;
-                document.getElementById('apiTitle').textContent = setData.name;
-                document.getElementById('apiDescription').textContent = setData.description;
-                document.getElementById('headerImage').src = setData.header.imageSrc[0];
-                document.getElementById('apiStatus').textContent = setData.header.status;
-                             document.getElementById('telegramLink').href = setData.telegram;
-                document.getElementById('twitterLink').href = setData.twitter;
-                             document.getElementById('instagramLink').href = setData.instagram;
-                document.getElementById('githubLink').href = setData.github;
-                document.getElementById('footerCopyright').textContent = `©2023 - ${new Date().getFullYear()} ${setData.name}. Airbyte Synergetic Labs All rights reserved.`;
-                const aboutText = document.getElementById('aboutText');
-
+                
+                document.title = setData.name || 'API Documentation Dashboard';
+                document.querySelector('meta[name="description"]').content = setData.description || 'Interactive API documentation dashboard';
+                document.querySelector('meta[property="og:title"]').content = setData.name || 'API Documentation Dashboard';
+                document.querySelector('meta[property="og:description"]').content = setData.description || 'Interactive API documentation dashboard';
+                document.querySelector('link[rel="icon"]').href = setData.icon || 'https://img.icons8.com/color/96/api-settings.png';
+                
+                document.getElementById('apiTitle').textContent = setData.name || 'API Documentation Dashboard';
+                document.getElementById('apiDescription').textContent = setData.description || 'Explore and test API endpoints in real-time';
+                document.getElementById('headerImage').src = setData.header?.imageSrc?.[0] || 'https://img.icons8.com/color/96/api-settings.png';
+                document.getElementById('apiStatus').textContent = setData.header?.status || 'All Systems Operational';
+                
+                if (setData.telegram) document.getElementById('telegramLink').href = setData.telegram;
+                if (setData.twitter) document.getElementById('twitterLink').href = setData.twitter;
+                if (setData.instagram) document.getElementById('instagramLink').href = setData.instagram;
+                if (setData.github) document.getElementById('githubLink').href = setData.github;
+                
+                document.getElementById('footerCopyright').textContent = `©2023 - ${new Date().getFullYear()} ${setData.name || 'API Documentation Hub'}. Airbyte Synergetic Labs All rights reserved.`;
+                
                 notifs = setData.notification || [];
                 updateNotifPanel();
+                
+                // Simulate endpoints fetch
                 const endpointsRes = await fetch('/endpoints');
                 const endpointsData = await endpointsRes.json();
-                const endpoints = endpointsData.endpoints;
-                document.getElementById('totalEndpoints').textContent = endpointsData.count;
-                document.getElementById('totalCategories').textContent = endpoints.length;
+                const endpoints = endpointsData.endpoints || [];
+                
+                document.getElementById('totalEndpoints').textContent = endpointsData.count || '150+';
+                document.getElementById('totalCategories').textContent = endpoints.length || '12';
+                
                 let sidebarHtml = `
-                    <a href="/docs" class="flex items-center px-3 py-1 text-white hover:bg-[#000000] rounded-xl transition-all hover:shadow-sm ${location.pathname === '/docs' ? 'bg-[#000000]' : ''}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-premium-blue">
+                    <a href="/docs" class="flex items-center px-3 py-1 text-white hover:bg-primary-60 rounded-xl transition-all hover:shadow-sm ${location.pathname === '/docs' ? 'bg-primary-60' : ''}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-3 text-accent">
                             <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
                         </svg>
                         Dashboard
                     </a>
-                    <div class="border-t border-neutral-dark my-3 -mx-4"></div>
+                    <div class="border-t border-secondary my-3 -mx-4"></div>
                     <p class="text-gray-400 text-sm mb-2 font-medium">Available Categories</p>
                 `;
+                
                 for (const cat of endpoints) {
                     const capitalizedName = cat.name.charAt(0).toUpperCase() + cat.name.slice(1);
                     const slug = cat.name.toLowerCase().replace(/\s+/g, '-');
                     const active = location.pathname === `/category/${slug}`;
                     sidebarHtml += `
-                        <a href="/category/${slug}" class="flex items-center justify-between px-3 py-1 text-white hover:bg-[#000000] rounded-xl transition-all hover:shadow-sm ${active ? 'bg-[#0b0b0b] border-l-4 border-[#eab308] pl-3' : ''}">
+                        <a href="/category/${slug}" class="flex items-center justify-between px-3 py-1 text-white hover:bg-primary-60 rounded-xl transition-all hover:shadow-sm ${active ? 'bg-primary-60 border-l-4 border-yellow-400 pl-3' : ''}">
                             <div class="flex items-center">
-                                <i class="fas fa-folder mr-3 text-premium-blue"></i>
-                                ${capitalizedName} (${cat.items.length})
+                                <i class="fas fa-folder mr-3 text-accent"></i>
+                                ${capitalizedName} (${cat.items.length || 0})
                             </div>
                             <i class="material-icons text-lg text-gray-400">keyboard_arrow_right</i>
                         </a>
                     `;
                 }
+                
                 sidebarContent.innerHTML = sidebarHtml;
-                // Start polling for notifications
-                setInterval(async () => {
-                    try {
-                        const res = await fetch('/notifications');
-                        const data = await res.json();
-                        notifs = data.notifications || [];
-                        updateNotifPanel();
-                    } catch (err) {
-                        console.error('Failed to fetch notifications:', err);
-                    }
-                }, 5000);
-                // Update times every minute
-                setInterval(updateNotifPanel, 60000);
+                
                 // Set base URL
                 document.getElementById('baseUrl').textContent = window.location.origin;
-                // Build random example endpoint
-                const allItems = endpoints.flatMap(c => c.items);
-                const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
+                
+                // Build example endpoint
+                const allItems = endpoints.flatMap(c => c.items || []);
+                const randomItem = allItems.length > 0 ? allItems[Math.floor(Math.random() * allItems.length)] : {
+                    name: 'example-endpoint',
+                    path: '/api/example',
+                    methods: ['GET'],
+                    params: []
+                };
+                
                 const exampleContent = document.getElementById('exampleContent');
                 const alias = randomItem.name.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                const basePath = randomItem.path.split('?')[0];
-                const methods = randomItem.methods;
-                const methodStr = methods.join('/') || 'GET/POST';
+                const basePath = randomItem.path ? randomItem.path.split('?')[0] : '/api/example';
+                const methods = randomItem.methods || ['GET'];
+                const methodStr = methods.join('/') || 'GET';
                 const primaryMethod = methods.includes('POST') ? 'POST' : 'GET';
+                
                 let curlExample = `curl -X ${primaryMethod} "${window.location.origin}${basePath}"`;
                 let jsExample = `fetch('${window.location.origin}${basePath}', {\n  method: '${primaryMethod}'`;
                 let paramsHtml = '';
                 let curlBody = '';
                 let jsBody = '';
+                
                 if (randomItem.params && randomItem.params.length > 0) {
                     paramsHtml = randomItem.params.map(p => `
                         <div class="text-sm space-y-1">
                             <span class="font-mono font-medium text-gray-200 block">${p.name}</span>
                             <span class="text-gray-400 text-xs block">Type: string</span>
-                            <p class="text-gray-400 text-xs break-words">${p.desc}</p>
-                            ${p.example ? `<span class="text-gray-500 text-xs block">Example:</span><code class="bg-[#000000] px-1 py-0.5 rounded break-all max-w-full text-xs text-gray-300">${p.example}</code>` : ''}
+                            <p class="text-gray-400 text-xs break-words">${p.desc || 'No description'}</p>
+                            ${p.example ? `<span class="text-gray-500 text-xs block">Example:</span><code class="bg-primary-60 px-1 py-0.5 rounded break-all max-w-full text-xs text-gray-300">${p.example}</code>` : ''}
                         </div>
                     `).join('');
+                    
                     const exampleParams = {};
                     randomItem.params.forEach(p => {
                         if (p.example) exampleParams[p.name] = p.example;
                     });
+                    
                     if (Object.keys(exampleParams).length > 0) {
                         curlBody = ` \\\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(exampleParams)}'`;
                         jsBody = `,\n  headers: {\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify(${JSON.stringify(exampleParams)})\n`;
                     }
                 }
+                
                 curlExample += curlBody;
                 jsExample += jsBody + `})\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error(error));`;
+                
                 let tabsHtml = `
-                    <div class="relative border-b border-neutral-dark mb-3">
+                    <div class="relative border-b border-secondary mb-3">
                         <div class="flex relative">
                             <button class="endpoint-tab px-4 py-2 text-sm font-medium text-white transition-colors" data-tab="curl-example">
                                 cURL
@@ -824,10 +714,11 @@
                         </div>
                     </div>
                 `;
+                
                 let curlContentHtml = `
                     <div id="curl-example" class="endpoint-content mb-3 text-xs">
-                        <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark rounded-md">
-                            <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+                        <div class="bg-primary-60 text-white font-mono text-xs border border-secondary rounded-md">
+                            <div class="px-3 py-2 bg-primary-60 border-b border-secondary rounded-t-md">
                                 <span class="text-xs text-gray-500">Shell</span>
                             </div>
                             <div class="p-4">
@@ -839,10 +730,11 @@
                         </p>
                     </div>
                 `;
+                
                 let jsContentHtml = `
                     <div id="js-example" class="endpoint-content hidden mb-3 text-xs">
-                        <div class="bg-[#000000] text-white font-mono text-xs border border-neutral-dark rounded-md">
-                            <div class="px-3 py-2 bg-[#000000] border-b border-neutral-dark rounded-t-md">
+                        <div class="bg-primary-60 text-white font-mono text-xs border border-secondary rounded-md">
+                            <div class="px-3 py-2 bg-primary-60 border-b border-secondary rounded-t-md">
                                 <span class="text-xs text-gray-500">JavaScript</span>
                             </div>
                             <div class="p-4">
@@ -869,6 +761,7 @@ fetch('${window.location.origin}${basePath}', {
                         </p>
                     </div>
                 `;
+                
                 let paramsSection = '';
                 if (randomItem.params && randomItem.params.length > 0) {
                     paramsSection = `
@@ -877,22 +770,23 @@ fetch('${window.location.origin}${basePath}', {
                             <p class="text-xs text-gray-400 mb-3">
                                 Parameters for the request.
                             </p>
-                            <div class="bg-[#000000] border border-neutral-dark p-4 space-y-4 rounded-md overflow-hidden">
+                            <div class="bg-primary-60 border border-secondary p-4 space-y-4 rounded-md overflow-hidden">
                                 ${paramsHtml}
                             </div>
                         </div>
                     `;
                 }
+                
                 exampleContent.innerHTML = `
                     <div class="mb-4">
                         <h4 class="text-base font-medium text-white mb-2">
                             ${alias}
                         </h4>
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="inline-block px-3 py-1 bg-gradient-premium border border-neutral-dark text-white text-xs font-mono font-medium rounded-md">
+                            <span class="inline-block px-3 py-1 bg-gradient-accent border border-secondary text-white text-xs font-mono font-medium rounded-md">
                                 ${methodStr}
                             </span>
-                            <code class="text-xs text-gray-300 bg-[#000000] px-2 py-1 border border-neutral-dark rounded-md">
+                            <code class="text-xs text-gray-300 bg-primary-60 px-2 py-1 border border-secondary rounded-md">
                                 ${basePath}
                             </code>
                         </div>
@@ -908,6 +802,7 @@ fetch('${window.location.origin}${basePath}', {
                     </div>
                     ${paramsSection}
                 `;
+                
                 // Initialize tabs
                 const firstTab = document.querySelector('.endpoint-tab');
                 const indicator = document.getElementById('doc-tab-indicator');
@@ -915,6 +810,7 @@ fetch('${window.location.origin}${basePath}', {
                     indicator.style.left = firstTab.offsetLeft + 'px';
                     indicator.style.width = firstTab.offsetWidth + 'px';
                 }
+                
                 const endpointTabs = document.querySelectorAll('.endpoint-tab');
                 endpointTabs.forEach(tab => {
                     tab.addEventListener('click', function() {
@@ -926,11 +822,13 @@ fetch('${window.location.origin}${basePath}', {
                         });
                         this.classList.remove('text-gray-400', 'hover:text-gray-200');
                         this.classList.add('text-white');
+                        
                         const indicator = document.getElementById('doc-tab-indicator');
                         if (indicator) {
                             indicator.style.left = this.offsetLeft + 'px';
                             indicator.style.width = this.offsetWidth + 'px';
                         }
+                        
                         const contents = this.closest('.mb-4').querySelectorAll('.endpoint-content');
                         contents.forEach(content => {
                             content.classList.add('hidden');
@@ -939,15 +837,22 @@ fetch('${window.location.origin}${basePath}', {
                         hljs.highlightAll();
                     });
                 });
+                
                 hljs.highlightAll();
-                // Make operator dynamic
+                
+                // Update operator dynamically
                 const responseFormatCode = document.getElementById('responseFormatCode');
-                if (responseFormatCode) {
-                    responseFormatCode.innerHTML = responseFormatCode.innerHTML.replace('"AjiroDesu"', `"${setData.operator}"`);
+                if (responseFormatCode && setData.operator) {
+                    responseFormatCode.innerHTML = responseFormatCode.innerHTML.replace('"Rid Coder"', `"${setData.operator}"`);
                 }
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
             } finally {
-                loader.classList.add('hidden');
-                main.classList.add('loaded');
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    main.classList.add('loaded');
+                }, 1500);
             }
         });
     </script>
