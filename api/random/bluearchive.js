@@ -1,9 +1,9 @@
-// loli.js
+// blue-archive.js
 const axios = require('axios');
 
 const meta = {
-    name: 'loli',
-    desc: 'loli random image',
+    name: 'blue archive',
+    desc: 'blue archive random image',
     method: 'get',
     category: 'random',
 };
@@ -11,7 +11,7 @@ const meta = {
 async function onStart({ req, res }) {
     try {
         const { data } = await axios.get(
-            'https://raw.githubusercontent.com/rynxzyy/loli-r-img/refs/heads/main/links.json'
+            'https://raw.githubusercontent.com/rynxzyy/blue-archive-r-img/refs/heads/main/links.json'
         );
         // pick a random URL from the array
         const imageUrl = data[Math.floor(Math.random() * data.length)];
