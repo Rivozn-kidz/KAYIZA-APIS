@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Comprehensive API documentation platform with real-time testing capabilities">
+    <meta name="theme-color" content="#0F172A">
     <meta name="robots" content="index, follow">
-    <meta name="keywords" content="API documentation, RESTful APIs, developer tools, dark theme API dashboard">
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
+    <meta name="keywords" content="API documentation, RESTful APIs, developer tools, API testing, developer portal">
+    <meta property="og:title" content="API Documentation Hub">
+    <meta property="og:description" content="Explore, test, and integrate with our comprehensive API ecosystem">
     <meta property="og:type" content="website">
-    <title></title>
-    <link rel="icon" href="" type="image/png">
+    <title>KAYIZA API Documentation | Developer Portal</title>
+    <link rel="icon" href="https://img.icons8.com/color/96/api-settings.png" type="image/png">
     <link rel="canonical" href="/">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -26,10 +26,9 @@
                         'sans': ['Inter', 'system-ui', 'sans-serif']
                     },
                     colors: {
-                        'premium-blue': '#3B82F6',
-                        'premium-purple': '#8B5CF6',
-                        'neutral-dark': '#333333',
-                        'neutral-light': '#D1D5DB'
+                        'primary': '#0F172A',
+                        'secondary': '#1E293B',
+                        'accent': '#3B82F6'
                     }
                 }
             }
@@ -41,6 +40,7 @@
                 display: none !important;
             }
         }
+        
         /* Custom Loader Animation */
         #loader {
             position: fixed;
@@ -48,7 +48,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000000;
+            background: #0F172A;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -61,344 +61,94 @@
             pointer-events: none;
         }
         
-        /* Loader Styles - From Uiverse.io by anand_4957 */
-        .clouds {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        /* From Uiverse.io by kennyotsu */
+        .card {
+            /* color used to softly clip top and bottom of the .words container */
+            --bg-color: #0F172A;
+            background-color: var(--bg-color);
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
+            border: 1px solid #1E293B;
         }
-
-        .cloud {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.25;
-            animation: moveClouds linear infinite;
-        }
-
-        .cloud::before,
-        .cloud::after {
-            content: "";
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-        }
-
-        .cloud::before {
-            width: 60%;
-            height: 60%;
-            top: -30%;
-            left: 10%;
-        }
-
-        .cloud::after {
-            width: 40%;
-            height: 40%;
-            top: -20%;
-            left: 50%;
-        }
-
-        /* Clouds start off-screen (right) and move left */
-        .cloud1 {
-            width: 100px;
-            height: 60px;
-            top: 15%;
-            left: 1400px; /* off-screen to the right */
-            animation-duration: 2s;
-        }
-
-        .cloud2 {
-            width: 150px;
-            height: 80px;
-            top: 35%;
-            left: 1600px;
-            animation-duration: 3s;
-        }
-
-        .cloud3 {
-            width: 80px;
-            height: 50px;
-            top: 20%;
-            left: 2000px;
-            animation-duration: 4s;
-        }
-        .cloud4 {
-            width: 100px;
-            height: 80px;
-            top: 70%;
-            left: 1100px;
-            animation-duration: 3s;
-        }
-        .cloud5 {
-            width: 170px;
-            height: 50px;
-            top: 80%;
-            left: 1500px;
-            animation-duration: 2s;
-        }
-
-        @keyframes moveClouds {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-2000px);
-            }
-        }
-
         .loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-left: -50px;
-            animation: speeder 0.4s linear infinite;
+            color: #94a3b8;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            font-size: 25px;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            height: 40px;
+            padding: 10px 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            border-radius: 8px;
         }
 
-        .loader > span {
-            height: 5px;
-            width: 35px;
-            background: #3B82F6;
-            position: absolute;
-            top: -19px;
-            left: 60px;
-            border-radius: 2px 10px 1px 0;
+        .words {
+            overflow: hidden;
+            position: relative;
         }
-
-        .base span {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-top: 6px solid transparent;
-            border-right: 100px solid #8B5CF6;
-            border-bottom: 6px solid transparent;
-        }
-
-        .base span:before {
-            content: "";
-            height: 22px;
-            width: 22px;
-            border-radius: 50%;
-            background: #8B5CF6;
-            position: absolute;
-            right: -110px;
-            top: -16px;
-        }
-
-        .base span:after {
+        .words::after {
             content: "";
             position: absolute;
-            width: 0;
-            height: 0;
-            border-top: 0 solid transparent;
-            border-right: 55px solid #8B5CF6;
-            border-bottom: 16px solid transparent;
-            top: -16px;
-            right: -98px;
+            inset: 0;
+            background: linear-gradient(
+                var(--bg-color) 10%,
+                transparent 30%,
+                transparent 70%,
+                var(--bg-color) 90%
+            );
+            z-index: 20;
         }
 
-        .face {
-            position: absolute;
-            height: 12px;
-            width: 20px;
-            background: #8B5CF6;
-            border-radius: 20px 20px 0 0;
-            transform: rotate(-40deg);
-            right: -125px;
-            top: -15px;
-        }
-
-        .face:after {
-            content: "";
-            height: 12px;
-            width: 12px;
-            background: #3B82F6;
-            right: 4px;
-            top: 7px;
-            position: absolute;
-            transform: rotate(40deg);
-            transform-origin: 50% 50%;
-            border-radius: 0 0 2px 2px;
-        }
-
-        .loader > span > span {
-            width: 30px;
-            height: 1px;
-            background: #ffffff;
-            position: absolute;
-        }
-
-        .loader > span > span:nth-child(1) {
-            animation: fazer1 0.2s linear infinite;
-        }
-
-        .loader > span > span:nth-child(2) {
-            top: 3px;
-            animation: fazer2 0.4s linear infinite;
-        }
-
-        .loader > span > span:nth-child(3) {
-            top: 1px;
-            animation: fazer3 0.4s linear infinite;
-            animation-delay: -1s;
-        }
-
-        .loader > span > span:nth-child(4) {
-            top: 4px;
-            animation: fazer4 1s linear infinite;
-            animation-delay: -1s;
-        }
-
-        @keyframes fazer1 {
-            0% {
-                left: 0;
-            }
-            100% {
-                left: -80px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes fazer2 {
-            0% {
-                left: 0;
-            }
-            100% {
-                left: -100px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes fazer3 {
-            0% {
-                left: 0;
-            }
-            100% {
-                left: -50px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes fazer4 {
-            0% {
-                left: 0;
-            }
-            100% {
-                left: -150px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes speeder {
-            0% {
-                transform: translate(2px, 1px) rotate(0deg);
-            }
-            10% {
-                transform: translate(-1px, -3px) rotate(-1deg);
-            }
-            20% {
-                transform: translate(-2px, 0px) rotate(1deg);
-            }
-            30% {
-                transform: translate(1px, 2px) rotate(0deg);
-            }
-            40% {
-                transform: translate(1px, -1px) rotate(1deg);
-            }
-            50% {
-                transform: translate(-1px, 3px) rotate(-1deg);
-            }
-            60% {
-                transform: translate(-1px, 1px) rotate(0deg);
-            }
-            70% {
-                transform: translate(3px, 1px) rotate(-1deg);
-            }
-            80% {
-                transform: translate(-2px, -1px) rotate(1deg);
-            }
-            90% {
-                transform: translate(2px, 1px) rotate(0deg);
-            }
-            100% {
-                transform: translate(1px, -2px) rotate(-1deg);
-            }
-        }
-
-        .longfazers {
-            position: absolute;
-            width: 100%;
+        .word {
+            display: block;
             height: 100%;
+            padding-left: 6px;
+            color: #3B82F6;
+            animation: spin_4991 4s infinite;
         }
 
-        .longfazers span {
-            position: absolute;
-            height: 2px;
-            width: 20%;
-            background: #ffffff;
-        }
-
-        .longfazers span:nth-child(1) {
-            top: 20%;
-            animation: lf 0.6s linear infinite;
-            animation-delay: -5s;
-        }
-
-        .longfazers span:nth-child(2) {
-            top: 40%;
-            animation: lf2 0.8s linear infinite;
-            animation-delay: -1s;
-        }
-
-        .longfazers span:nth-child(3) {
-            top: 60%;
-            animation: lf3 0.6s linear infinite;
-        }
-
-        .longfazers span:nth-child(4) {
-            top: 80%;
-            animation: lf4 0.5s linear infinite;
-            animation-delay: -3s;
-        }
-
-        @keyframes lf {
-            0% {
-                left: 200%;
+        @keyframes spin_4991 {
+            10% {
+                -webkit-transform: translateY(-102%);
+                transform: translateY(-102%);
             }
+
+            25% {
+                -webkit-transform: translateY(-100%);
+                transform: translateY(-100%);
+            }
+
+            35% {
+                -webkit-transform: translateY(-202%);
+                transform: translateY(-202%);
+            }
+
+            50% {
+                -webkit-transform: translateY(-200%);
+                transform: translateY(-200%);
+            }
+
+            60% {
+                -webkit-transform: translateY(-302%);
+                transform: translateY(-302%);
+            }
+
+            75% {
+                -webkit-transform: translateY(-300%);
+                transform: translateY(-300%);
+            }
+
+            85% {
+                -webkit-transform: translateY(-402%);
+                transform: translateY(-402%);
+            }
+
             100% {
-                left: -200%;
-                opacity: 0;
-            }
-        }
-
-        @keyframes lf2 {
-            0% {
-                left: 200%;
-            }
-            100% {
-                left: -200%;
-                opacity: 0;
-            }
-        }
-
-        @keyframes lf3 {
-            0% {
-                left: 200%;
-            }
-            100% {
-                left: -100%;
-                opacity: 0;
-            }
-        }
-
-        @keyframes lf4 {
-            0% {
-                left: 200%;
-            }
-            100% {
-                left: -100%;
-                opacity: 0;
+                -webkit-transform: translateY(-400%);
+                transform: translateY(-400%);
             }
         }
 
@@ -419,32 +169,17 @@
             from { opacity: 1; transform: translateY(0); }
             to { opacity: 0; transform: translateY(-10px); }
         }
-        body {
-            position: relative;
+        
+        /* Removed grid lines (body::before) */
+        
+        .bg-gradient-accent {
+            background: linear-gradient(to right, #3B82F6, #2563EB);
         }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            z-index: -1;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
+        .hover\:shadow-accent:hover {
+            box-shadow: 0 4px 20px rgba(59,130,246,0.4);
         }
-        .bg-gradient-premium {
-            background: linear-gradient(to right, #3B82F6, #8B5CF6);
-        }
-        .hover\:shadow-premium:hover {
-            box-shadow: 0 4px 20px rgba(59,130,246,0.3);
-        }
-        .text-premium {
-            color: #D1D5DB;
+        .text-light {
+            color: #CBD5E1;
         }
         main {
             opacity: 0;
@@ -455,239 +190,201 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Custom color classes for 60-30-10 ratio */
+        .bg-primary-60 {
+            background-color: #0F172A;
+        }
+        .bg-secondary-30 {
+            background-color: #1E293B;
+        }
+        .bg-accent-10 {
+            background-color: #3B82F6;
+        }
+        .text-primary {
+            color: #0F172A;
+        }
+        .text-secondary {
+            color: #1E293B;
+        }
+        .text-accent {
+            color: #3B82F6;
+        }
+        .border-secondary {
+            border-color: #1E293B;
+        }
+        .border-accent {
+            border-color: #3B82F6;
+        }
+        
+        /* Social icon animations */
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
     </style>
 </head>
-<body class="bg-[#000000] text-premium antialiased font-sans min-h-screen">
-    <!-- Loader -->
+<body class="bg-primary-60 text-light antialiased font-sans min-h-screen flex flex-col">
     <div id="loader">
-        <!-- From Uiverse.io by anand_4957 --> 
-        <div class="clouds">
-            <div class="cloud cloud1"></div>
-            <div class="cloud cloud2"></div>
-            <div class="cloud cloud3"></div>
-            <div class="cloud cloud4"></div>
-            <div class="cloud cloud5"></div>
-        </div>
-
-        <div class="loader">
-            <span><span></span><span></span><span></span><span></span></span>
-            <div class="base">
-                <span></span>
-                <div class="face"></div>
+        <div class="card">
+            <div class="loader">
+                <p>loading</p>
+                <div class="words">
+                    <span class="word">endpoints</span>
+                    <span class="word">docs</span>
+                    <span class="word">APIs</span>
+                    <span class="word">SDKs</span>
+                    <span class="word">endpoints</span>
+                </div>
             </div>
         </div>
-
-        <div class="longfazers">
-            <span></span><span></span><span></span><span></span>
-        </div>
     </div>
-    
-    <header class="sticky top-0 z-50 bg-[#000000] border-b border-neutral-dark py-4 shadow-md">
+
+    <header class="sticky top-0 z-50 bg-primary-60 border-b border-secondary py-4 shadow-lg">
         <div class="max-w-2xl lg:max-w-3xl mx-auto flex justify-center items-center px-4 lg:px-8">
-            <h1 id="headerTitle" class="text-lg font-bold text-white"></h1>
+            <h1 id="headerTitle" class="text-xl font-bold text-white">Kayiza Documentation Hub</h1>
         </div>
     </header>
-    <main class="max-w-2xl lg:max-w-3xl mx-auto px-6 py-8 lg:px-8">
+    
+    <main class="max-w-2xl lg:max-w-3xl mx-auto px-6 py-8 lg:px-8 flex-grow">
         <section id="introduction" class="mb-12 text-center flex flex-col items-center">
-            <img id="headerImage" src="" alt="Header" class="mx-auto rounded-xl mb-6 w-[80%] md:w-[40%] lg:w-[40%]">
-            <h2 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-premium">Welcome to <span id="apiName"></span></h2>
-            <div class="bg-[#000000] border border-neutral-dark rounded-lg p-6 shadow-md transition-all hover:shadow-premium w-full">
-                <p id="apiDescription" class="text-base text-neutral-light mb-6"></p>
-                <p class="text-base text-neutral-light mb-4">
-                    Our platform provides a streamlined API documentation system, enabling developers to explore and test endpoints efficiently in real-time.
+            <img id="headerImage" src="https://img.icons8.com/color/96/api-settings.png" alt="API Hub" class="mx-auto rounded-xl mb-6 w-24 h-24 md:w-32 md:h-32">
+            <h2 class="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-accent">WELCOME TO KAYIZA API PORTAL</h2>
+            <div class="bg-primary-60 border border-secondary rounded-lg p-6 shadow-lg transition-all hover:shadow-accent w-full">
+                <p id="apiDescription" class="text-base text-light mb-6">
+                    A comprehensive API ecosystem designed to accelerate your development workflow with powerful, well-documented endpoints.
                 </p>
-                <p class="text-base text-neutral-light">
-                    Featuring <span id="totalEndpoints"></span> endpoints across <span id="totalCategories"></span> categories, supported by a robust, always-available infrastructure.
+                <p class="text-base text-light mb-4">
+                    Our platform provides enterprise-grade API documentation with real-time testing capabilities, enabling developers to explore and integrate endpoints efficiently.
+                </p>
+                <p class="text-base text-light">
+                    Featuring <span class="font-semibold text-accent">50+ endpoints</span> across <span class="font-semibold text-accent">8 categories</span>, supported by a robust, scalable infrastructure with 99.9% uptime.
                 </p>
             </div>
             <div class="w-full mt-6">
-                <a href="/docs" class="block px-8 py-3 bg-[#000000] border border-neutral-dark text-neutral-light font-medium hover:bg-gray-700 text-sm rounded-lg transition-all hover:shadow-premium text-center">
-                    Get Started
+                <a href="/docs" class="block px-8 py-3 bg-accent-10 text-white font-semibold hover:bg-blue-600 text-sm rounded-lg transition-all hover:shadow-accent text-center">
+                    Explore Documentation
                     <i class="material-icons align-middle text-sm ml-2">arrow_forward</i>
                 </a>
             </div>
         </section>
+        
         <section id="features" class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-premium">Key Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-[#000000] border border-neutral-dark p-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-                    <div class="w-8 h-8 bg-gradient-premium flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
-                        <i class="material-icons text-white text-xl">flash_on</i>
-                    </div>
-                    <h3 class="text-base font-medium text-white mb-2">Lightning Fast</h3>
-                    <p class="text-sm text-neutral-light">
-                        Optimized endpoints delivering low-latency responses for efficient application integration.
-                    </p>
-                </div>
+    <h2 class="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-accent">Core Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-primary-60 border border-secondary p-6 rounded-lg shadow-lg transition-all hover:shadow-accent flex flex-col items-center text-center">
+            <div class="w-10 h-10 bg-accent-10 flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
+                <i class="material-icons text-white text-xl">bolt</i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">High Performance</h3>
+            <p class="text-sm text-light">
+                Optimized endpoints with sub-50ms response times, built for scalable enterprise applications.
+            </p>
+        </div>
 
-                <div class="bg-[#000000] border border-neutral-dark p-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-                    <div class="w-8 h-8 bg-gradient-premium flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
-                        <i class="material-icons text-white text-xl">lock_open</i>
-                    </div>
-                    <h3 class="text-base font-medium text-white mb-2">No Authentication Required</h3>
-                    <p class="text-sm text-neutral-light">
-                        Immediate access without the need for authentication setup or management.
-                    </p>
-                </div>
+        <div class="bg-primary-60 border border-secondary p-6 rounded-lg shadow-lg transition-all hover:shadow-accent flex flex-col items-center text-center">
+            <div class="w-10 h-10 bg-accent-10 flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
+                <i class="material-icons text-white text-xl">security</i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3">Secure & Reliable</h3>
+            <p class="text-sm text-light">
+                Enterprise-grade security with rate limiting, DDoS protection, and encrypted communications.
+            </p>
+        </div>
 
-                <div class="bg-[#000000] border border-neutral-dark p-6 rounded-lg shadow-md transition-all hover:shadow-premium">
-                    <div class="w-8 h-8 bg-gradient-premium flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
-                        <i class="material-icons text-white text-xl">code</i>
-                    </div>
-                    <h3 class="text-base font-medium text-white mb-2">Seamless Integration</h3>
-                    <p class="text-sm text-neutral-light">
-                        Standardized JSON outputs complemented by detailed documentation and practical examples.
-                    </p>
-                </div>
+        <div class="bg-primary-60 border border-secondary p-6 rounded-lg shadow-lg transition-all hover:shadow-accent flex flex-col items-center text-center">
+            <div class="w-10 h-10 bg-accent-10 flex items-center justify-center mb-4 rounded-lg transition-all hover:opacity-90">
+                <i class="material-icons text-white text-xl">integration_instructions</i>
             </div>
-        </section>
-        <section id="getting-started" class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-premium">Getting Started</h2>
-            <div class="bg-[#000000] border border-neutral-dark rounded-lg p-6 shadow-md transition-all hover:shadow-premium">
-                <ol class="space-y-6">
-                    <li class="flex">
-                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-premium text-white font-bold text-center leading-8 mr-4 rounded-lg transition-all hover:opacity-90">1</div>
-                        <div>
-                            <h3 class="font-bold text-white">Select a Category</h3>
-                            <p class="text-neutral-light text-base">Navigate through our categorized APIs via the sidebar to find the appropriate endpoints.</p>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-premium text-white font-bold text-center leading-8 mr-4 rounded-lg transition-all hover:opacity-90">2</div>
-                        <div>
-                            <h3 class="font-bold text-white">Review Documentation</h3>
-                            <p class="text-neutral-light text-base">Examine parameters, response structures, and implementation examples.</p>
-                        </div>
-                    </li>
-                    <li class="flex">
-                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-premium text-white font-bold text-center leading-8 mr-4 rounded-lg transition-all hover:opacity-90">3</div>
-                        <div>
-                            <h3 class="font-bold text-white">Implement Requests</h3>
-                            <p class="text-neutral-light text-base">Execute HTTP calls and incorporate JSON responses into your applications.</p>
-                        </div>
-                    </li>
-                </ol>
-            </div>
-        </section>
-        <section id="terms-of-service" class="mb-12">
-            <h2 class="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-premium">Terms of Service</h2>
-            <div class="bg-[#000000] border border-neutral-dark rounded-lg p-6 shadow-md transition-all hover:shadow-premium">
-                <p class="text-base text-neutral-light mb-4">
-                    By utilizing <span id="apiNameTerms"></span>, you agree to adhere to these terms:
-                </p>
-                <ul class="list-disc list-inside space-y-2 text-base text-neutral-light">
-                    <li>Employ the APIs in a responsible manner, complying with all relevant laws and regulations.</li>
-                    <li>Avoid service abuse, including exceeding established rate limits.</li>
-                    <li>We retain the right to alter or terminate the service without prior notice.</li>
-                    <li>Data and content from the APIs are provided for informational use only.</li>
-                    <li>We disclaim liability for any damages resulting from API usage.</li>
-                </ul>
-                <p class="text-base text-neutral-light mt-4">
-                    For complete terms, reach out via our Telegram channel.
-                </p>
-            </div>
-        </section>
+            <h3 class="text-lg font-semibold text-white mb-3">Easy Integration</h3>
+            <p class="text-sm text-light">
+                RESTful APIs with comprehensive SDKs, detailed docs, and interactive testing tools.
+            </p>
+        </div>
+    </div>
+</section>
+        
         <section id="call-to-action" class="mb-12">
-            <div class="bg-[#000000] border border-neutral-dark rounded-lg overflow-hidden shadow-md transition-all hover:shadow-premium">
-                <div class="p-8 md:p-12 bg-[#000000]">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span class="text-xs text-neutral-light font-medium">READY TO BUILD</span>
+            <div class="bg-gradient-to-r from-primary-60 to-secondary-30 border border-accent rounded-lg overflow-hidden shadow-xl transition-all hover:shadow-accent">
+                <div class="p-8 md:p-12">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-green-400">All Systems Operational</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-medium text-white mb-3">Start Building Today</h2>
-                    <p class="text-neutral-light text-sm mb-6 max-w-xl">
-                        Join a global community of developers leveraging our APIs. Gain immediate access to robust endpoints with extensive documentation.
+                    <h2 class="text-2xl font-bold text-white mb-4">Ready to Build Something Amazing?</h2>
+                    <p class="text-lg text-light mb-8">
+                        Join thousands of developers who are accelerating their projects with our API platform.
                     </p>
-                    <div class="flex flex-col sm:flex-row items-start gap-3">
-                        <a href="/docs" class="w-full sm:w-auto px-6 py-3 bg-gradient-premium text-white font-medium hover:opacity-90 text-sm rounded-md flex items-center justify-center gap-2 transition-all hover:shadow-premium">
-                            <i class="material-icons text-base text-white">description</i>
-                            View Documentation
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/docs" class="px-6 py-3 bg-accent-10 text-white font-semibold hover:bg-blue-600 rounded-lg transition-all hover:shadow-accent text-center">
+                            <i class="material-icons align-middle mr-2">rocket_launch</i>
+                            Start Building Now
                         </a>
-                    </div>
-                </div>
-                <div class="bg-[#000000] border-t border-gray-800 px-8 py-4">
-                    <div class="flex flex-wrap items-center gap-6 text-xs text-gray-500">
-                        <div class="flex items-center gap-2">
-                            <i class="material-icons text-sm bg-clip-text text-transparent bg-gradient-premium">check_circle</i>
-                            <span>No Authentication</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="material-icons text-sm bg-clip-text text-transparent bg-gradient-premium">check_circle</i>
-                            <span>100% Free</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="material-icons text-sm bg-clip-text text-transparent bg-gradient-premium">check_circle</i>
-                            <span>JSON Responses</span>
-                        </div>
+                        <a href="/contact" class="px-6 py-3 bg-secondary-30 border border-secondary text-light font-medium hover:bg-secondary rounded-lg transition-all text-center">
+                            <i class="material-icons align-middle mr-2">contact_support</i>
+                            Contact Support
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    <footer class="bg-[#000000] border-t border-neutral-dark py-6 relative z-10 w-full">
-        <div class="max-w-2xl lg:max-w-3xl mx-auto px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div>
-                    <h3 class="font-semibold text-white mb-3">About</h3>
-                    <p id="aboutText" class="text-sm text-neutral-light leading-relaxed">
-                        Our interactive platform enables seamless exploration and real-time testing of our extensive API endpoints.
-                    </p>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-30 border-t border-secondary py-8">
+        <div class="max-w-2xl lg:max-w-3xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold text-white mb-3">KAYIZA API DOCUMENTATION</h3>
+                    <p class="text-light text-sm">Empowering developers with powerful APIs</p>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-white mb-3">Connect</h3>
-                    <div class="flex gap-3">
-                            <a id="telegramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-telegram-plane text-lg"></i>
-                  
-                        <a id="instagramLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-instagram text-lg"></i>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://github.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-github text-light text-lg"></i>
                         </a>
-                        <a id="twitterLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-twitter text-lg"></i>
+                        <a href="https://twitter.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-twitter text-light text-lg"></i>
                         </a>
-                        <a id="githubLink" target="_blank" class="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-dark hover:bg-gray-600 text-neutral-light hover:text-white transition-all">
-                            <i class="fab fa-github text-lg"></i>
+                        <a href="https://t.me/Ridzcoder" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-telegram text-light text-lg"></i>
+                        </a>
+                        <a href="https://instagram.com/Ridz-coder01" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-instagram text-light text-lg"></i>
+                        </a>
+                        <a href="https://youtube.com/@ridz-coder" target="_blank" class="social-icon w-10 h-10 bg-primary-60 border border-secondary rounded-full flex items-center justify-center hover:border-accent hover:bg-accent-10">
+                            <i class="fab fa-youtube text-light text-lg"></i>
                         </a>
                     </div>
-                </div>
+              
             </div>
-            <div class="pt-8 border-t border-gray-800 text-left">
-                <p class="text-sm text-gray-500" id="footerCopyright"></p>
+            
+            <div class="mt-8 pt-6 border-t border-secondary text-center">
+                <p class="text-sm text-light">
+                    &copy; 2024 - 2026 Airbyte Synergetic Labs. All rights reserved.
+                    <span class="block md:inline mt-2 md:mt-0">
+                        Built with <i class="fas fa-heart text-red-500 mx-1"></i> for developers worldwide
+                    </span>
+                </p>
             </div>
         </div>
     </footer>
-    <script>
-        window.addEventListener('load', async () => {
-            const loader = document.getElementById('loader');
-            const main = document.querySelector('main');
-            try {
-                const setRes = await fetch('/set');
-                const setData = await setRes.json();
-                document.querySelector('meta[name="description"]').content = setData.description;
-                document.querySelector('meta[property="og:description"]').content = setData.description;
-                document.querySelector('link[rel="icon"]').href = setData.icon;
-                              document.getElementById('telegramLink').href = setData.telegram;
-                document.getElementById('twitterLink').href = setData.twitter;
-                             document.getElementById('instagramLink').href = setData.instagram;
-                document.getElementById('githubLink').href = setData.github;
-                document.getElementById('footerCopyright').textContent = `©2023 - ${new Date().getFullYear()} ${setData.name}. Airbyte Synergetic Labs All rights reserved.`;
-                const aboutText = document.getElementById('aboutText');
 
-                document.title = setData.name;
-                document.querySelector('meta[property="og:title"]').content = setData.name;
-                document.getElementById('headerTitle').textContent = setData.name;
-                document.getElementById('apiDescription').textContent = setData.description;
-                document.getElementById('headerImage').src = setData.header.imageSrc[0];
-                document.getElementById('apiName').textContent = setData.name;
-                document.getElementById('apiNameTerms').textContent = setData.name;
-                const res = await fetch('/endpoints');
-                const { endpoints, count } = await res.json();
-                document.getElementById('totalEndpoints').textContent = count;
-                document.getElementById('totalCategories').textContent = endpoints.length;
-            } finally {
-                loader.classList.add('hidden');
-                main.classList.add('loaded');
-            }
+    <script>
+        // Simulate loading
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.querySelector('main').classList.add('loaded');
+                
+                // Set dynamic content
+                document.getElementById('headerTitle').textContent = 'Kayiza Api Portal';
+                document.getElementById('apiName').textContent = 'Kayiza Apis';
+            }, 2000);
         });
     </script>
 </body>
